@@ -10,6 +10,9 @@ export class ApiRequestService {
 
   constructor(private http: HttpClient) {}
 
+  createPost(postData: any): Observable<any> {
+    return this.http.post(`${this.baseURL}/posts`, postData);
+  }
 
   get<T>(endpoint: string): Observable<T> {
     return this.http.get<T>(`${this.baseURL}/${endpoint}`, { withCredentials: true });

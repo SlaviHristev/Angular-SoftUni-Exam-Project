@@ -1,0 +1,81 @@
+<div class="create">
+    <div class="formContainer">
+      <h1>Add New Car</h1>
+      <div class="wrapper">
+        <form (ngSubmit)="onSubmit()">
+          <div class="item">
+            <label for="title">Title</label>
+            <input id="title" formControlName="title" type="text" required />
+          </div>
+  
+          <div class="item">
+            <label for="price">Price</label>
+            <input id="price" formControlName="price" type="number" min="1" required />
+          </div>
+  
+          <div class="item">
+            <label for="yearOfMake">Year of Make</label>
+            <input id="yearOfMake" formControlName="yearOfMake" type="number" min="1" required />
+          </div>
+  
+          <div class="item">
+            <label for="horsePower">Engine Power</label>
+            <input id="horsePower" formControlName="horsePower" type="number" min="1" required />
+          </div>
+  
+          <div class="item">
+            <label for="color">Color</label>
+            <input id="color" formControlName="color" type="text" required />
+          </div>
+  
+          <div class="item">
+            <label for="city">City</label>
+            <input id="city" formControlName="city" type="text" required />
+          </div>
+  
+          <div class="item">
+            <label for="category">Category</label>
+            <select formControlName="category" required>
+              <option value="sedan">Sedan</option>
+              <option value="coupe">Coupe</option>
+              <option value="combi">Combi</option>
+              <option value="suv">SUV</option>
+              <option value="hatchback">Hatchback</option>
+            </select>
+          </div>
+  
+          <div class="item">
+            <label for="fuelType">Fuel Type</label>
+            <select formControlName="fuelType" required>
+              <option value="petrol">Petrol</option>
+              <option value="diesel">Diesel</option>
+              <option value="electric">Electric</option>
+              <option value="hybrid">Hybrid</option>
+            </select>
+          </div>
+  
+          <div class="item">
+            <label for="transmission">Transmission</label>
+            <select formControlName="transmission" required>
+              <option value="manual">Manual</option>
+              <option value="automatic">Automatic</option>
+            </select>
+          </div>
+  
+          <div class="item description">
+            <label for="description">Description</label>
+            <textarea formControlName="description" id="description" required></textarea>
+          </div>
+  
+          <button class="send" type="submit" [disabled]="createForm.invalid">Add</button>
+        </form>
+      </div>
+    </div>
+  
+    <div class="sideContainer">
+        @for (image of images; track $index) {
+            <img [src]="image" alt="Car Image" />
+        }
+      <app-upload-widget (imagesUploaded)="handleImageUpload($event)"></app-upload-widget>
+    </div>
+  </div>
