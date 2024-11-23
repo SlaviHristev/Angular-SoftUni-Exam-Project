@@ -15,6 +15,13 @@ export class AuthService {
   updateUser(user: User | null): void {
     this.currentUserSubject.next(user);
   }
+  login(username: string, password: string): Observable<any> {
+    return this.http.post(`http://localhost:8800/api/auth/login`, { username, password });
+  }
+
+  register(username: string, email: string, password: string): Observable<any> {
+    return this.http.post(`http://localhost:8800/api/auth/register`, { username, email, password });
+  }
 
   logout(): Observable<void> {
     return this.http.post<void>('http://localhost:8800/api/auth/logout', {}, { withCredentials: true });
