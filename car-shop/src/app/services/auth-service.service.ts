@@ -16,7 +16,7 @@ export class AuthService {
     this.currentUserSubject.next(user);
   }
   login(username: string, password: string): Observable<any> {
-    return this.http.post(`http://localhost:8800/api/auth/login`, { username, password });
+    return this.http.post(`http://localhost:8800/api/auth/login`, { username, password }, {withCredentials: true});
   }
 
   register(username: string, email: string, password: string): Observable<any> {

@@ -23,7 +23,8 @@ export class LoginComponent {
     const formData = new FormData(form);
     const username = formData.get('username') as string;
     const password = formData.get('password') as string;
-
+    console.log(username, password);
+    
     this.authService.login(username, password).subscribe({
       next: (user) => {
         this.authService.updateUser(user);

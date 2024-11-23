@@ -15,11 +15,12 @@ import notificationRoute from './routes/notification.js';
 const app = express();
 dotenv.config();
 app.use(cors({
-    origin: 'http://localhost:5173', credentials: true
+    origin: 'http://localhost:4200', credentials: true
 }));
 app.use(express.json())
 app.use(cookieParser());
 dbConnect();
+
 
 app.use('/api/auth',authRoute);
 app.use('/api/posts', postRoute);
