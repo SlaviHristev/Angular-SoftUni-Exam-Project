@@ -1,0 +1,29 @@
+<div class="home">
+  <div class="upperPart">
+    <div class="textContainer">
+      <div class="wrapper">
+        <h1 class="title">Find The Dream Car At The Most Affordable Price</h1>
+        <p>Your dream can be only a few clicks away!</p>
+      </div>
+    </div>
+    <div class="imgContainer">
+      <img src="/background.png" alt="Background" />
+    </div>
+  </div>
+
+  <div class="lowerPart">
+    <div class="searchBarContainer">
+      <!-- <app-search-bar></app-search-bar> -->
+    </div>
+    <div class="sliderContainer">
+      <!-- <app-card-slider [items]="recentCars"></app-card-slider> -->
+    </div>
+  </div>
+
+  <!-- Spinner -->
+  @if(loading){
+  <div class="spinnerContainer">
+    <app-spinner/>
+  </div>
+  }
+</div>
