@@ -1,0 +1,31 @@
+<nav>
+  <div class="leftSide">
+    <a routerLink="/" class="logo">
+      <img src="/logo.png" alt="Logo" />
+      <span>Car Shop</span>
+    </a>
+    <a routerLink="/">Home</a>
+    <a routerLink="/catalog">Catalog</a>
+    <a routerLink="/about">About</a>
+    <a routerLink="/contact">Contact</a>
+    <a *ngIf="currentUser" routerLink="/create">Create</a>
+  </div>
+  <div class="rightSide">
+    @if (currentUser) {
+    <div class="user">
+      <img
+        [src]="currentUser.avatar || '/assets/noavatar.jpg'"
+        alt="User Avatar"
+      />
+      <span>{{ currentUser.username }}</span>
+      <a routerLink="/profile" class="profile">
+        <span>Profile</span>
+      </a>
+      <a (click)="handleLogout()">Logout</a>
+    </div>
+    }@else {
+    <a routerLink="/login">Sign In</a>
+    <a routerLink="/register">Sign Up</a>
+    }
+  </div>
+</nav>
