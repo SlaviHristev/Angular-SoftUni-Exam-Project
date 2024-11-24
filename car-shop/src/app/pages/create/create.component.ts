@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiRequestService } from '../../services/api-request.service';
 import { UploadWidgetComponent } from '../../shared/upload-widget/upload-widget.component';
@@ -8,7 +8,7 @@ import { UploadWidgetComponent } from '../../shared/upload-widget/upload-widget.
   selector: 'app-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss'],
-  imports: [UploadWidgetComponent]
+  imports: [UploadWidgetComponent, ReactiveFormsModule]
 })
 export class CreateComponent implements OnInit {
   createForm: FormGroup;
@@ -54,11 +54,11 @@ export class CreateComponent implements OnInit {
       category: formData.category,
       fuelType: formData.fuelType,
       transmission: formData.transmission,
-      description: this.description,
-      images: this.images
+      description: formData.description,
+      images: this?.images
     };
 
- 
+  
     this.apiService.createPost(postData).subscribe({
       next: () => {
         this.router.navigate(['/catalog']);

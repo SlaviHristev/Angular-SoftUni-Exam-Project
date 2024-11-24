@@ -5,8 +5,12 @@ export const addPost = async (req, res) => {
 
     const newPost = new Car({
         ownerId: req.userId,
-        ...req.body.data,
+        ...req.body,
     })
+    console.log(req.userId);
+    console.log(req.body);
+    
+    
 
     try {
         const post = await newPost.save();

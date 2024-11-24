@@ -4,7 +4,6 @@ import { CloudinaryScriptService } from '../../services/cloudinary.service';
 @Component({
   selector: 'app-upload-widget',
   templateUrl: './upload-widget.component.html',
-  styleUrls: ['./upload-widget.component.css']
 })
 export class UploadWidgetComponent implements OnInit {
   @ViewChild('uploadButton', { static: true })

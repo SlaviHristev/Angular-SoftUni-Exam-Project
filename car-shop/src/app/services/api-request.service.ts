@@ -11,7 +11,9 @@ export class ApiRequestService {
   constructor(private http: HttpClient) {}
 
   createPost(postData: any): Observable<any> {
-    return this.http.post(`${this.baseURL}/posts`, postData);
+    console.log(postData);
+    
+    return this.http.post(`${this.baseURL}/posts`, postData, {withCredentials: true});
   }
 
   get<T>(endpoint: string): Observable<T> {
