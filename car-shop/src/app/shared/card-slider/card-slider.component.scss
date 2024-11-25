@@ -1,0 +1,51 @@
+.slider-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+  
+    .slider-wrapper {
+      width: 100%;
+      overflow: hidden;
+  
+      .slider {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+  
+        .slide {
+          min-width: 300px; /* Adjust based on your card width */
+          flex-shrink: 0;
+          padding: 0 10px; /* Spacing between cards */
+          box-sizing: border-box;
+        }
+      }
+    }
+  
+    .arrow {
+      background-color: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      position: absolute;
+      z-index: 1;
+  
+      &.left {
+        left: 10px;
+      }
+  
+      &.right {
+        right: 10px;
+      }
+  
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.8);
+      }
+    }
+  }

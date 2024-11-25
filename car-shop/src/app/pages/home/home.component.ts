@@ -2,10 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SpinnerComponent } from "../../shared/spinner/spinner.component";
+import { CardSliderComponent } from "../../shared/card-slider/card-slider.component";
 
 @Component({
   selector: 'app-home',
-  imports: [SpinnerComponent],
+  imports: [SpinnerComponent, CardSliderComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -24,6 +25,8 @@ export class HomeComponent implements OnInit {
       next: (data) => {
         this.recentCars = data;
         this.loading = false;
+        console.log(this.recentCars);
+        
       },
       error: (error) => {
         console.error('Failed to fetch recent cars:', error);

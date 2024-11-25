@@ -1,0 +1,15 @@
+<div class="slider-container">
+  <button class="arrow left" (click)="prevSlide()">←</button>
+
+  <div class="slider-wrapper">
+    <div class="slider" #slider>
+      <div class="slide">
+        @for (item of items; track $index) {
+        <app-card [item]="item"></app-card>
+        }
+      </div>
+    </div>
+  </div>
+
+  <button class="arrow right" (click)="nextSlide()">→</button>
+</div>

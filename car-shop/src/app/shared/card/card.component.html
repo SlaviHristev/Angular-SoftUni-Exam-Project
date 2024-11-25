@@ -1,0 +1,38 @@
+<div class="card">
+  <a [routerLink]="['/catalog', item?._id]" class="imageContainer">
+    <img [src]="item?.images?.[0]" alt="Item Image" />
+  </a>
+
+  <div class="textContainer">
+    <h2 class="title">
+      <a [routerLink]="['/catalog', item?._id]">{{ item?.title }}</a>
+    </h2>
+
+    <p class="city">
+      <img src="/pin.png" alt="Location Pin" />
+      <span>{{ item?.city }}</span>
+    </p>
+
+    <p class="price">$ {{ item?.price }}</p>
+
+    <div class="bottom">
+      <div class="features">
+        <div class="feature">
+          <img src="/engine.png" alt="Fuel Icon" />
+          <span>{{ item?.fuelType }}</span>
+        </div>
+        <div class="feature">
+          <img src="/calendar.png" alt="Calendar Icon" />
+          <span>{{ item?.yearOfMake }}</span>
+        </div>
+      </div>
+      @if (!isOwner() && currentUser) {
+      <div class="icons">
+        <div class="icon" (click)="openChat(item?.ownerId)">
+          <img src="/chat.png" alt="Chat Icon" />
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</div>
