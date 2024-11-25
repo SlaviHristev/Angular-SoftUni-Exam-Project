@@ -39,10 +39,7 @@ export const addPost = async (req, res) => {
 export const getPosts = async (req, res) => {
 
     try {
-        const posts = await Car.find();
-        
-        console.log(posts);
-        
+        const posts = await Car.find();     
         res.status(200).json(posts);
     } catch (error) {
         console.log(error);
@@ -53,8 +50,10 @@ export const getPosts = async (req, res) => {
 
 export const getPost = async (req, res) => {
     const id = req.params.id;
+    
     try {
         const post = await Car.findById(id).populate('ownerId', 'username avatar');
+        
 
         if (!post) {
             return res.status(404).json({ message: "Post not found!" });

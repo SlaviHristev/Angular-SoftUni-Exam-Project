@@ -1,0 +1,120 @@
+<div class="singlePage">
+  @if (!loading && post) {
+
+  <div class="details">
+    <div class="wrapper">
+      <!-- Image Slider -->
+      <!-- <app-slider [images]="post.images"></app-slider> -->
+
+
+      <div class="info">
+        <div class="top">
+          <div class="post">
+            <h1>{{ post.title }}</h1>
+            <div class="city">
+              <img src="/pin.png" alt="" />
+              <p>City:</p>
+              <span>{{ post.city }}</span>
+            </div>
+            <div class="price">
+              <p>Price:</p>
+              $ {{ post.price }}
+            </div>
+          </div>
+
+          @if (isOwner()) {
+
+          <div class="user">
+            <img [src]="currentUser?.avatar || '/noavatar.jpg'" alt="" />
+            <span>{{ currentUser?.username }} (You)</span>
+          </div>
+          @if (!isOwner()) {
+          <a [routerLink]="['/profiles', post.ownerId?._id]">
+            <div class="user">
+              <img [src]="post.ownerId?.avatar || '/noavatar.jpg'" alt="" />
+              <span>{{ post.ownerId?.username }}</span>
+            </div>
+          </a>
+          } }
+        </div>
+
+        <div class="bottom" [innerHTML]="sanitizeHtml(post.description)"></div>
+      </div>
+    </div>
+  </div>
+
+  @if (!loading && post) {
+
+  <div class="features">
+    <div class="wrapper">
+      <p class="title">General</p>
+      <div class="listVertical">
+        <div class="feature">
+          <img src="/calendar.png" alt="" />
+          <div class="featureText">
+            <span>Year</span>
+            <p>{{ post.yearOfMake }}</p>
+          </div>
+        </div>
+        <div class="feature">
+          <img src="/engine.png" alt="" />
+          <div class="featureText">
+            <span>Engine</span>
+            <p>{{ post.fuelType }}</p>
+          </div>
+        </div>
+        <div class="feature">
+          <img src="/horsePower.png" alt="" />
+          <div class="featureText">
+            <span>Horse Power</span>
+            <p>{{ post.horsePower }}</p>
+          </div>
+        </div>
+        <div class="feature">
+          <img src="/category.png" alt="" />
+          <div class="featureText">
+            <span>Category</span>
+            <p>{{ post.category }}</p>
+          </div>
+        </div>
+        <div class="feature">
+          <img src="/transmission.png" alt="" />
+          <div class="featureText">
+            <span>Transmission</span>
+            <p>{{ post.transmission }}</p>
+          </div>
+        </div>
+        <div class="feature">
+          <img src="/color.png" alt="" />
+          <div class="featureText">
+            <span>Color</span>
+            <p>{{ post.color }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="buttons">
+        @if (isOwner()) {
+        <a [routerLink]="['/edit', post._id]">
+          <button>
+            <img src="/edit.png" alt="" />
+            Edit
+          </button>
+        </a>
+        <button (click)="deletePost()">
+          <img src="/delete.png" alt="" />
+          Delete
+        </button>
+        }
+      </div>
+    </div>
+  </div>
+  } } @if (loading) {
+
+  <app-spinner></app-spinner>
+  } @if (!loading && !post) {
+  <div>No post data</div>
+
+  }
+</div>

@@ -7,6 +7,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { CreateComponent } from './pages/create/create.component';
 import { CatalogComponent } from './pages/catalog/catalog.component';
+import { SinglePageComponent } from './pages/single-page/single-page.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -16,6 +17,10 @@ export const routes: Routes = [
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
     {path: 'create', component: CreateComponent},
-    {path: 'catalog', component: CatalogComponent},
+    {path: 'catalog', children:[
+        {path:'', component:CatalogComponent},
+        {path:':id', component: SinglePageComponent}
+    ]},
+    
     {path: '**', component: NotFoundComponent}
 ];
