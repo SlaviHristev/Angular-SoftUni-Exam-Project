@@ -1,0 +1,33 @@
+<div class="catalog">
+  <div class="container">
+    <h2>Choose a car of your liking!</h2>
+
+    <!-- Search Bar Component -->
+    <!-- <app-search-bar></app-search-bar> -->
+
+    <!-- Spinner -->
+    @if (loading) {
+
+    <div class="spinner-container">
+      <app-spinner></app-spinner>
+    </div>
+    }
+
+    <!-- Post List -->
+    @if (!loading) {
+    <div class="wrapper">
+      <div class="card-container">
+        @for (post of posts; track $index) {
+
+        <app-card [item]="post"></app-card>
+        }
+      </div>
+
+      @if (!loading && posts.length === 0) {
+
+      <p>No posts found!</p>
+      }
+    </div>
+    }
+  </div>
+</div>

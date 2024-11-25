@@ -1,0 +1,19 @@
+.catalog{
+    display: flex;
+    height: 100%;
+
+    .container{
+        height: 100%;
+        
+        .wrapper{
+            padding-top: 30px;
+            padding-left: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            overflow-y: scroll;
+            padding-bottom: 50px;
+            box-sizing: border-box;
+        }
+    }
+}
