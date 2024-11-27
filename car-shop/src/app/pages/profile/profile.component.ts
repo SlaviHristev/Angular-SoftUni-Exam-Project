@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth-service.service';
 import { ApiRequestService } from '../../services/api-request.service';
 import { CardComponent } from "../../shared/card/card.component";
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
-  imports: [CardComponent]
+  imports: [CardComponent, RouterLink]
 })
 export class ProfileComponent implements OnInit {
   currentUser: any;

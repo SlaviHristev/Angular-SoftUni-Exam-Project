@@ -9,6 +9,7 @@ import { CreateComponent } from './pages/create/create.component';
 import { CatalogComponent } from './pages/catalog/catalog.component';
 import { SinglePageComponent } from './pages/single-page/single-page.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { ProfileUpdateComponent } from './pages/profile-update/profile-update.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -19,6 +20,7 @@ export const routes: Routes = [
     {path: 'register', component: RegisterComponent},
     {path: 'create', component: CreateComponent},
     {path: 'profile', component: ProfileComponent},
+    {path: 'profile/update', component: ProfileUpdateComponent},
     {path: 'catalog', children:[
         {path:'', component:CatalogComponent},
         {path:':id', component: SinglePageComponent}

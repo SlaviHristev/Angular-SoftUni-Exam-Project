@@ -1,0 +1,52 @@
+<div class="profileUpdate">
+    <div class="formContainer">
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+        <h1>Update Profile</h1>
+        <div class="item">
+          <label for="username">Username</label>
+          <input id="username" formControlName="username" type="text" />
+          @if (profileForm.controls['username'].invalid && profileForm.controls['username'].touched) {
+              <small>Username must be at least 4 characters long.</small>    
+          }
+          
+        </div>
+  
+        <div class="item">
+          <label for="email">Email</label>
+          <input id="email" formControlName="email" type="email" />
+          @if (profileForm.controls['email'].invalid && profileForm.controls['email'].touched) {
+            <small>Enter a valid email address with at least 10 characters.</small>
+          }
+        </div>
+  
+        <div class="item">
+          <label for="password">Password</label>
+          <input id="password" formControlName="password" type="password" />
+          @if (profileForm.controls['password'].invalid && profileForm.controls['password'].touched) {
+            <small>Password must be at least 4 characters long.</small>
+          }
+        </div>
+  
+        <button type="submit" [disabled]="profileForm.invalid">Update</button>
+      </form>
+    </div>
+  
+    <div class="sideContainer">
+      <img
+        [src]="avatar[0] || currentUser?.avatar || '/noavatar.jpg'"
+        alt="User Avatar"
+        class="avatar"
+      />
+    <!-- <app-upload-widget
+  [uwConfig]="{
+    multiple: false,
+    cloudName: 'dknpnmf1m',
+    uploadPreset: 'carShop',
+    folder: 'avatars',
+    maxImageFileSize: 2000000
+  }"
+  (avatarUpdated)="onAvatarUpdated($event)"
+></app-upload-widget> -->
+    </div>
+  </div>
+  
