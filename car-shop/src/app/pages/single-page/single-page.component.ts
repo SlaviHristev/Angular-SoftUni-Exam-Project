@@ -3,6 +3,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiRequestService } from '../../services/api-request.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SpinnerComponent } from "../../shared/spinner/spinner.component";
+import { AuthService } from '../../services/auth-service.service';
 
 @Component({
   selector: 'app-single-page',
@@ -19,12 +20,13 @@ export class SinglePageComponent implements OnInit {
     private apiRequestService: ApiRequestService,
     private route: ActivatedRoute,
     private router: Router,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
     
-    this.currentUser = { _id: 'currentUserId', username: 'User', avatar: '/noavatar.jpg' }; 
+    this.currentUser = this.authService.getCurrentUser(); 
 
     this.fetchPost();
   }
@@ -41,6 +43,8 @@ export class SinglePageComponent implements OnInit {
     this.apiRequestService.get(`posts/${postId}`).subscribe({
       next: (response: any) => {
         this.post = response || null;
+        console.log(this.currentUser);
+        console.log(this.post);
       },
       error: (err) => {
         console.error('Failed to fetch post:', err);
@@ -71,7 +75,9 @@ export class SinglePageComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustHtml(description);
   }
 
+
   isOwner(): boolean {
     return this.currentUser?._id === this.post?.ownerId?._id;
+  
   }
 }

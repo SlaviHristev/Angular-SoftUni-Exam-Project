@@ -40,44 +40,48 @@ export class ProfileComponent implements OnInit {
   }
 
   fetchUserPosts() {
-    this.apiService.get(`/posts/user/${this.currentUser._id}`).subscribe({
+    this.apiService.get(`posts/user/${this.currentUser._id}`).subscribe({
       next: (response: any) => {
-        this.userPosts = response;
+        this.userPosts = response || []; 
       },
       error: (error) => {
         console.error('Failed to fetch user posts:', error);
+        this.userPosts = []; 
       },
       complete: () => {
         this.loading = false;
-      }
+      },
     });
   }
-
+  
   fetchSavedPosts() {
-    this.apiService.get(`/users/${this.currentUser._id}/saved`).subscribe({
+    this.apiService.get(`users/${this.currentUser._id}/saved`).subscribe({
       next: (response: any) => {
-        this.savedPosts = response.data;
+        this.savedPosts = response?.data || []; 
       },
       error: (error) => {
         console.error('Failed to fetch saved posts:', error);
+        this.savedPosts = [];
       },
       complete: () => {
         this.loading = false;
-      }
+      },
     });
   }
-
+  
   fetchUserChats() {
-    this.apiService.get(`/chats/user/${this.currentUser._id}`).subscribe({
+    this.apiService.get(`chats/user/${this.currentUser._id}`).subscribe({
       next: (response: any) => {
-        this.chats = response.data.filter((chat: any) => chat.messages.length > 0);
+        
+        this.chats = response?.data?.filter((chat: any) => chat?.messages?.length > 0) || [];
       },
       error: (error) => {
         console.error('Failed to fetch user chats:', error);
+        this.chats = []; 
       },
       complete: () => {
         this.loading = false;
-      }
+      },
     });
   }
 
