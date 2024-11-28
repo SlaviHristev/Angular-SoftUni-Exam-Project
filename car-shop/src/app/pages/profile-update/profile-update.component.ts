@@ -42,7 +42,7 @@ export class ProfileUpdateComponent implements OnInit {
     const { username, email, password } = this.profileForm.value;
 
     this.apiService
-      .put<User>(`/users/${this.currentUser?._id}`, {
+      .put<User>(`users/${this.currentUser?._id}`, {
         username,
         email,
         password,
@@ -60,7 +60,7 @@ export class ProfileUpdateComponent implements OnInit {
       });
   }
 
-  updateAvatar(avatarUrl: string): void {
-    this.avatar = [avatarUrl];
+  handleImageUpload(uploadedImages: string[]) {
+    this.avatar = uploadedImages;  
   }
 }

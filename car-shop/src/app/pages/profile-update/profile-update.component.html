@@ -37,16 +37,8 @@
         alt="User Avatar"
         class="avatar"
       />
-    <!-- <app-upload-widget
-  [uwConfig]="{
-    multiple: false,
-    cloudName: 'dknpnmf1m',
-    uploadPreset: 'carShop',
-    folder: 'avatars',
-    maxImageFileSize: 2000000
-  }"
-  (avatarUpdated)="onAvatarUpdated($event)"
-></app-upload-widget> -->
+      <app-upload-widget (imagesUploaded)="handleImageUpload($event)"></app-upload-widget>
+
     </div>
   </div>
   
