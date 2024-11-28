@@ -10,6 +10,7 @@ import { CatalogComponent } from './pages/catalog/catalog.component';
 import { SinglePageComponent } from './pages/single-page/single-page.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { ProfileUpdateComponent } from './pages/profile-update/profile-update.component';
+import { EditComponent } from './pages/edit-page/edit-page.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -20,11 +21,11 @@ export const routes: Routes = [
     {path: 'register', component: RegisterComponent},
     {path: 'create', component: CreateComponent},
     {path: 'profile', component: ProfileComponent},
+    {path: 'edit:id', component: EditComponent},
     {path: 'profile/update', component: ProfileUpdateComponent},
     {path: 'catalog', children:[
         {path:'', component:CatalogComponent},
-        {path:':id', component: SinglePageComponent}
+        {path:':id', component: SinglePageComponent},
     ]},
-    
     {path: '**', component: NotFoundComponent}
 ];
