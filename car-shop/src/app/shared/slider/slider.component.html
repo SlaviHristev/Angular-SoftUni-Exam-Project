@@ -1,0 +1,33 @@
+<div class="slider">
+    @if (imageIndex !== null) {
+        
+   
+    <div class="fullSlider">
+      <div class="arrow">
+        <img src="/arrow.png" alt="Left Arrow" (click)="changeSlide('left')" />
+      </div>
+      <div class="imageContainer">
+        <img [src]="images[imageIndex]" alt="Full-size Image" />
+      </div>
+      <div class="arrow">
+        <img src="/arrow.png" alt="Right Arrow" class="right" (click)="changeSlide('right')" />
+      </div>
+      <div class="close" (click)="closeSlider()">X</div>
+    </div>
+}
+
+    <div class="bigImage">
+      <img [src]="images[0]" alt="Big Image" (click)="openImage(0)" />
+    </div>
+
+    <div class="smallImages">
+        @for (image of images.slice(1); track $index) {
+      <img 
+        [src]="image" 
+        alt="Small Image {{ $index + 1 }}" 
+        (click)="openImage($index + 1)" 
+      />
+        }
+    </div>
+  </div>
+  

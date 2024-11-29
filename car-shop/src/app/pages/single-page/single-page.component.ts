@@ -4,13 +4,14 @@ import { ApiRequestService } from '../../services/api-request.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SpinnerComponent } from "../../shared/spinner/spinner.component";
 import { AuthService } from '../../services/auth-service.service';
-import { CardSliderComponent } from "../../shared/card-slider/card-slider.component";
+import { SliderComponent } from "../../shared/slider/slider.component";
+
 
 @Component({
   selector: 'app-single-page',
   templateUrl: './single-page.component.html',
   styleUrls: ['./single-page.component.scss'],
-  imports: [SpinnerComponent, RouterLink, CardSliderComponent],
+  imports: [SpinnerComponent, RouterLink, SliderComponent],
 })
 export class SinglePageComponent implements OnInit {
   post: any = null;
@@ -44,7 +45,6 @@ export class SinglePageComponent implements OnInit {
     this.apiRequestService.get(`posts/${postId}`).subscribe({
       next: (response: any) => {
         this.post = response || null;
-        console.log(this.currentUser);
         console.log(this.post);
       },
       error: (err) => {
