@@ -3,42 +3,46 @@
 
   <div class="details">
     <div class="wrapper">
-      <!-- Image Slider -->
-      <!-- <app-slider [images]="post.images"></app-slider> -->
+      <div class="details">
+        <app-card-slider [items]="post.images"></app-card-slider>
+       
 
-
-      <div class="info">
-        <div class="top">
-          <div class="post">
-            <h1>{{ post.title }}</h1>
-            <div class="city">
-              <img src="/pin.png" alt="" />
-              <p>City:</p>
-              <span>{{ post.city }}</span>
+        <div class="info">
+          <div class="top">
+            <div class="post">
+              <h1>{{ post.title }}</h1>
+              <div class="city">
+                <img src="/pin.png" alt="" />
+                <p>City:</p>
+                <span>{{ post.city }}</span>
+              </div>
+              <div class="price">
+                <p>Price:</p>
+                $ {{ post.price }}
+              </div>
             </div>
-            <div class="price">
-              <p>Price:</p>
-              $ {{ post.price }}
-            </div>
-          </div>
 
-          @if (isOwner()) {
+            @if (isOwner()) {
 
-          <div class="user">
-            <img [src]="currentUser?.avatar || '/noavatar.jpg'" alt="" />
-            <span>{{ currentUser?.username }} (You)</span>
-          </div>
-          @if (!isOwner()) {
-          <a [routerLink]="['/profiles', post.ownerId?._id]">
             <div class="user">
-              <img [src]="post.ownerId?.avatar || '/noavatar.jpg'" alt="" />
-              <span>{{ post.ownerId?.username }}</span>
+              <img [src]="currentUser?.avatar || '/noavatar.jpg'" alt="" />
+              <span>{{ currentUser?.username }} (You)</span>
             </div>
-          </a>
-          } }
-        </div>
+            @if (!isOwner()) {
+            <a [routerLink]="['/profiles', post.ownerId?._id]">
+              <div class="user">
+                <img [src]="post.ownerId?.avatar || '/noavatar.jpg'" alt="" />
+                <span>{{ post.ownerId?.username }}</span>
+              </div>
+            </a>
+            } }
+          </div>
 
-        <div class="bottom" [innerHTML]="sanitizeHtml(post.description)"></div>
+          <div
+            class="bottom"
+            [innerHTML]="sanitizeHtml(post.description)"
+          ></div>
+        </div>
       </div>
     </div>
   </div>
@@ -93,7 +97,6 @@
         </div>
       </div>
 
-      <!-- Buttons -->
       <div class="buttons">
         @if (isOwner()) {
         <a [routerLink]="['/edit', post._id]">

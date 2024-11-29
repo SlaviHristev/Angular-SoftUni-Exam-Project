@@ -21,8 +21,8 @@ export const routes: Routes = [
     {path: 'register', component: RegisterComponent},
     {path: 'create', component: CreateComponent},
     {path: 'profile', component: ProfileComponent},
-    {path: 'edit:id', component: EditComponent},
     {path: 'profile/update', component: ProfileUpdateComponent},
+    {path: 'edit/:id', component: EditComponent},
     {path: 'catalog', children:[
         {path:'', component:CatalogComponent},
         {path:':id', component: SinglePageComponent},

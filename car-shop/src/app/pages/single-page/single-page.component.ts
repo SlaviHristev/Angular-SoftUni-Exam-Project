@@ -4,12 +4,13 @@ import { ApiRequestService } from '../../services/api-request.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SpinnerComponent } from "../../shared/spinner/spinner.component";
 import { AuthService } from '../../services/auth-service.service';
+import { CardSliderComponent } from "../../shared/card-slider/card-slider.component";
 
 @Component({
   selector: 'app-single-page',
   templateUrl: './single-page.component.html',
   styleUrls: ['./single-page.component.scss'],
-  imports: [SpinnerComponent, RouterLink],
+  imports: [SpinnerComponent, RouterLink, CardSliderComponent],
 })
 export class SinglePageComponent implements OnInit {
   post: any = null;

@@ -58,7 +58,7 @@ export class EditComponent implements OnInit {
   }
 
   loadPost(): void {
-    this.apiService.get(`/posts/${this.postId}`).subscribe({
+    this.apiService.get(`posts/${this.postId}`).subscribe({
       next: (response: any) => {
         this.currentPost = response; 
         this.editForm.patchValue(this.currentPost);
@@ -84,7 +84,7 @@ export class EditComponent implements OnInit {
       images: this.images
     };
 
-    this.apiService.put(`/posts/edit/${this.postId}`, updatedPost).subscribe({
+    this.apiService.put(`posts/edit/${this.postId}`, updatedPost).subscribe({
       next: () => {
         // this.notifyService.showSuccess('Post updated successfully.');
         this.router.navigate([`/catalog/${this.postId}`]);

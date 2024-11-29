@@ -1,24 +1,16 @@
 <div class="edit">
-    <div class="form-container">
-      <h1>Edit your Car Info</h1>
+  <div class="formContainer">
+    <h1>Edit your Car Info</h1>
+    <div class="wrapper">
       <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
- 
         <div class="item">
           <label for="title">Title</label>
-          <input
-            type="text"
-            id="title"
-            formControlName="title"
-            required
-          />
-          @if (editForm.get('title')?.invalid && editForm.get('title')?.touched) {
-            <div>
-                Title must be at least 4 characters.
-              </div>
+          <input type="text" id="title" formControlName="title" required />
+          @if (editForm.get('title')?.invalid && editForm.get('title')?.touched)
+          {
+          <div>Title must be at least 4 characters.</div>
           }
-          
         </div>
-  
 
         <div class="item">
           <label for="price">Price</label>
@@ -29,14 +21,11 @@
             min="1"
             required
           />
-          @if (editForm.get('price')?.invalid && editForm.get('price')?.touched) {
-            <div>
-                Price must be greater than 0.
-              </div>
+          @if (editForm.get('price')?.invalid && editForm.get('price')?.touched)
+          {
+          <div>Price must be greater than 0.</div>
           }
-         
         </div>
-  
 
         <div class="item">
           <label for="yearOfMake">Year of Make</label>
@@ -48,7 +37,7 @@
             required
           />
         </div>
-  
+
         <div class="item">
           <label for="horsePower">Engine Power</label>
           <input
@@ -59,27 +48,17 @@
             required
           />
         </div>
-  
+
         <div class="item">
           <label for="color">Color</label>
-          <input
-            type="text"
-            id="color"
-            formControlName="color"
-            required
-          />
+          <input type="text" id="color" formControlName="color" required />
         </div>
-  
+
         <div class="item">
           <label for="city">City</label>
-          <input
-            type="text"
-            id="city"
-            formControlName="city"
-            required
-          />
+          <input type="text" id="city" formControlName="city" required />
         </div>
-  
+
         <div class="item">
           <label for="category">Category</label>
           <select formControlName="category">
@@ -90,7 +69,6 @@
             <option value="hatchback">Hatchback</option>
           </select>
         </div>
-  
 
         <div class="item">
           <label for="fuelType">Fuel Type</label>
@@ -109,52 +87,49 @@
             <option value="automatic">Automatic</option>
           </select>
         </div>
-  
 
         <div class="item description">
           <label for="description">Description</label>
-          <quill-editor
-            [(ngModel)]="description"
+          <textarea
             formControlName="description"
-          ></quill-editor>
+            id="description"
+            required
+          ></textarea>
+
           @if (description.length < 10) {
-            <div>
-                Description must be at least 10 characters.
-              </div>
+          <div>Description must be at least 10 characters.</div>
           }
-          
         </div>
-  
         <button type="submit" class="send" [disabled]="editForm.invalid">
           Update
         </button>
       </form>
     </div>
-  
-    <div class="side-container">
-      <div class="images">
-        <h2>Images</h2>
-        @if (images?.length) {
-        <div>
-          <div
-            class="image-container">
+  </div>
+  <div class="sideContainer">
+    <div class="images">
+      <h2>Images</h2>
+      @if (images) {
+      <div>
+        <div class="imageContainer">
           @for (image of images; track $index) {
 
-            <img [src]="image" alt="" />
-            <button (click)="deleteImage($index)">
-              <img src="/delete.png" alt="Delete" />
-            </button>
-        }
-    </div>
+          <img [src]="image" alt="" />
+          <button (click)="deleteImage($index)">
+            <img src="/delete.png" alt="Delete" />
+          </button>
+          }
         </div>
-        
-    }@else {
-          <p>No images available.</p>
-    }
       </div>
-      <div class="upload-widget">
-        <app-upload-widget (imagesUploaded)="handleImageUpload($event)"></app-upload-widget>
-      </div>
+
+      }@else {
+      <p>No images available.</p>
+      }
+    </div>
+    <div class="uploadWidget">
+      <app-upload-widget
+        (imagesUploaded)="handleImageUpload($event)"
+      ></app-upload-widget>
     </div>
   </div>
-  
+</div>

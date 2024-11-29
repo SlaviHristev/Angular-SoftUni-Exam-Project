@@ -14,9 +14,9 @@
         transition: transform 0.5s ease-in-out;
   
         .slide {
-          min-width: 300px; /* Adjust based on your card width */
+          min-width: 300px; 
           flex-shrink: 0;
-          padding: 0 10px; /* Spacing between cards */
+          padding: 0 10px; 
           box-sizing: border-box;
         }
       }
