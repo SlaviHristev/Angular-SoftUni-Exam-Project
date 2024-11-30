@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../types/User';
+import { ErrorService } from './error.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class AuthService {
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   currentUser$ = this.currentUserSubject.asObservable();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,private errorService: ErrorService,) {
     // Load user data from localStorage on service initialization
     const storedUser = localStorage.getItem('currentUser');
     if (storedUser) {
@@ -37,7 +38,12 @@ export class AuthService {
             observer.next(user);
             observer.complete();
           },
-          error: (err) => observer.error(err),
+          error: (err) =>{
+            console.log(err);
+            
+            const errorMessage = err.error?.message || 'Login failed';
+            this.errorService.setError(errorMessage);
+          }
         });
     });
   }

@@ -3,12 +3,14 @@ import { AuthService } from '../../services/auth-service.service';
 import { ApiRequestService } from '../../services/api-request.service';
 import { CardComponent } from "../../shared/card/card.component";
 import { RouterLink } from '@angular/router';
+import { ErrorPopUpComponent } from "../../shared/error-popup/error-popup.component";
+import { ErrorService } from '../../services/error.service';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
-  imports: [CardComponent, RouterLink]
+  imports: [CardComponent, RouterLink, ErrorPopUpComponent]
 })
 export class ProfileComponent implements OnInit {
   currentUser: any;
@@ -23,7 +25,8 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private apiService: ApiRequestService
+    private apiService: ApiRequestService,
+    private errorService: ErrorService,
   ) {}
 
   ngOnInit() {
@@ -34,7 +37,7 @@ export class ProfileComponent implements OnInit {
       this.fetchSavedPosts();
       this.fetchUserChats();
     } else {
-      console.error('Current user is not available.');
+        this.errorService.setError("Failed to fetch User Information!"); 
       this.loading = false;
     }
   }

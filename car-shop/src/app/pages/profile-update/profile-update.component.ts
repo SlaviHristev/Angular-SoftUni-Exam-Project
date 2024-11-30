@@ -5,12 +5,14 @@ import { AuthService } from '../../services/auth-service.service';
 import { ApiRequestService } from '../../services/api-request.service';
 import { UploadWidgetComponent } from "../../shared/upload-widget/upload-widget.component";
 import { User } from '../../types/User';  
+import { ErrorService } from '../../services/error.service';
+import { ErrorPopUpComponent } from "../../shared/error-popup/error-popup.component";
 
 @Component({
   selector: 'app-profile-update',
   templateUrl: './profile-update.component.html',
   styleUrls: ['./profile-update.component.scss'],
-  imports: [UploadWidgetComponent, ReactiveFormsModule]
+  imports: [UploadWidgetComponent, ReactiveFormsModule, ErrorPopUpComponent]
 })
 export class ProfileUpdateComponent implements OnInit {
   profileForm!: FormGroup;
@@ -21,7 +23,8 @@ export class ProfileUpdateComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private apiService: ApiRequestService,
-    private router: Router
+    private router: Router,
+    private errorService: ErrorService
   ) {}
 
   ngOnInit(): void {
@@ -35,7 +38,7 @@ export class ProfileUpdateComponent implements OnInit {
 
   onSubmit(): void {
     if (this.profileForm.invalid) {
-      console.error('Form is invalid');
+        this.errorService.setError("Form is invalid"); 
       return;
     }
 
@@ -54,8 +57,8 @@ export class ProfileUpdateComponent implements OnInit {
           this.router.navigate(['/profile']);
         },
         error: (err) => {
-          const errorMessages = err?.error?.errors || ['Profile update failed'];
-          errorMessages.forEach((message: string) => console.error(message));
+          const errorMessage = err.error?.message || 'Profile update failed';
+        this.errorService.setError(errorMessage); 
         },
       });
   }

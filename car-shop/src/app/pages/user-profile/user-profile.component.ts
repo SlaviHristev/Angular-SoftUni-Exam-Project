@@ -5,13 +5,14 @@ import { AuthService } from '../../services/auth-service.service';
 import { ErrorService } from '../../services/error.service';
 import { SpinnerComponent } from "../../shared/spinner/spinner.component";
 import { CardComponent } from "../../shared/card/card.component";
+import { ErrorPopUpComponent } from "../../shared/error-popup/error-popup.component";
 // import { ChatService } from '../../services/chat.service';
 
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.scss'],
-  imports: [SpinnerComponent, CardComponent]
+  imports: [SpinnerComponent, CardComponent, ErrorPopUpComponent]
 })
 export class UserProfileComponent implements OnInit {
   userId: string = '';
@@ -28,7 +29,8 @@ export class UserProfileComponent implements OnInit {
     private apiRequestService: ApiRequestService,
     private authService: AuthService,
     private errorService: ErrorService,
-    // private chatService: ChatService
+    // private chatService: ChatService,
+
   ) {
     this.currentUser = this.authService.getCurrentUser();
   }
@@ -52,14 +54,14 @@ export class UserProfileComponent implements OnInit {
           },
           error: (err) => {
             console.error('Failed to fetch user posts:', err);
-            this.errorService.showError('Failed to fetch user posts.');
+            this.errorService.setError('Failed to fetch user posts.');
             this.loading = false;
           }
         });
       },
       error: (err) => {
         console.error('Failed to fetch user info:', err);
-        this.errorService.showError('Failed to fetch user info.');
+        this.errorService.setError('Failed to fetch user info.');
         this.loading = false;
       }
     });

@@ -3,12 +3,14 @@ import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angula
 import { Router } from '@angular/router';
 import { ApiRequestService } from '../../services/api-request.service';
 import { UploadWidgetComponent } from '../../shared/upload-widget/upload-widget.component';
+import { ErrorPopUpComponent } from "../../shared/error-popup/error-popup.component";
+import { ErrorService } from '../../services/error.service';
 
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss'],
-  imports: [UploadWidgetComponent, ReactiveFormsModule]
+  imports: [UploadWidgetComponent, ReactiveFormsModule, ErrorPopUpComponent]
 })
 export class CreateComponent implements OnInit {
   createForm: FormGroup;
@@ -18,7 +20,8 @@ export class CreateComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private apiService: ApiRequestService,
-    private router: Router
+    private router: Router,
+    private errorService: ErrorService,
   ) {
   
     this.createForm = this.fb.group({
@@ -64,7 +67,8 @@ export class CreateComponent implements OnInit {
         this.router.navigate(['/catalog']);
       },
       error: (err) => {
-        console.error('Creation Failed!', err);
+        const errorMessage = err.error?.message || 'Creation failed!';
+        this.errorService.setError(errorMessage); 
       }
     });
   }

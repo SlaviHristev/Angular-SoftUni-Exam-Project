@@ -3,10 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SpinnerComponent } from "../../shared/spinner/spinner.component";
 import { CardSliderComponent } from "../../shared/card-slider/card-slider.component";
+import { ErrorPopUpComponent } from "../../shared/error-popup/error-popup.component";
+import { ErrorService } from '../../services/error.service';
 
 @Component({
   selector: 'app-home',
-  imports: [SpinnerComponent, CardSliderComponent],
+  imports: [SpinnerComponent, CardSliderComponent, ErrorPopUpComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -14,7 +16,7 @@ export class HomeComponent implements OnInit {
   recentCars: any[] = [];
   loading = true;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private errorService: ErrorService) {}
 
   ngOnInit(): void {
     this.fetchRecentCars();
@@ -31,7 +33,8 @@ export class HomeComponent implements OnInit {
       error: (error) => {
         console.error('Failed to fetch recent cars:', error);
         this.loading = false;
-        alert('Failed to fetch recent cars');
+        const errorMessage = error.error?.message || 'Failed to fetch recent cars:';
+        this.errorService.setError(errorMessage); 
       },
     });
   }

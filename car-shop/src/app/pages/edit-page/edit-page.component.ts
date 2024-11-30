@@ -4,13 +4,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiRequestService } from '../../services/api-request.service';
 import { AuthService } from '../../services/auth-service.service';
 import { UploadWidgetComponent } from "../../shared/upload-widget/upload-widget.component";
-// import { NotificationService } from '../../services/notification.service';
+import { ErrorService } from '../../services/error.service';
+import { ErrorPopUpComponent } from "../../shared/error-popup/error-popup.component";
 
 @Component({
   selector: 'app-edit',
   templateUrl: './edit-page.component.html',
   styleUrls: ['./edit-page.component.scss'],
-  imports: [ReactiveFormsModule, UploadWidgetComponent]
+  imports: [ReactiveFormsModule, UploadWidgetComponent, ErrorPopUpComponent]
 })
 export class EditComponent implements OnInit {
   editForm!: FormGroup;
@@ -34,7 +35,7 @@ export class EditComponent implements OnInit {
     private router: Router,
     private apiService: ApiRequestService,
     private authService: AuthService,
-    // private notifyService: NotificationService
+    private errorService: ErrorService,
   ) {}
 
   ngOnInit(): void {
@@ -74,7 +75,7 @@ export class EditComponent implements OnInit {
 
   onSubmit(): void {
     if (this.editForm.invalid) {
-      // this.notifyService.showError('Invalid form input.');
+        this.errorService.setError('Invalid form input!'); 
       return;
     }
 
@@ -86,11 +87,11 @@ export class EditComponent implements OnInit {
 
     this.apiService.put(`posts/edit/${this.postId}`, updatedPost).subscribe({
       next: () => {
-        // this.notifyService.showSuccess('Post updated successfully.');
         this.router.navigate([`/catalog/${this.postId}`]);
       },
       error: (err) => {
-        // this.notifyService.showError('Failed to update post.');
+        const errorMessage = err.error?.message || 'Failed to update Post!';
+        this.errorService.setError(errorMessage); 
       }
     });
   }

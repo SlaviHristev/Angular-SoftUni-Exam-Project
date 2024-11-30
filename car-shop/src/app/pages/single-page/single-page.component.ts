@@ -6,13 +6,15 @@ import { SpinnerComponent } from "../../shared/spinner/spinner.component";
 import { AuthService } from '../../services/auth-service.service';
 import { SliderComponent } from "../../shared/slider/slider.component";
 import { SocketService } from '../../services/socket-service.service';
+import { ErrorService } from '../../services/error.service';
+import { ErrorPopUpComponent } from "../../shared/error-popup/error-popup.component";
 
 
 @Component({
   selector: 'app-single-page',
   templateUrl: './single-page.component.html',
   styleUrls: ['./single-page.component.scss'],
-  imports: [SpinnerComponent, RouterLink, SliderComponent],
+  imports: [SpinnerComponent, RouterLink, SliderComponent, ErrorPopUpComponent],
 })
 export class SinglePageComponent implements OnInit {
   
@@ -28,7 +30,8 @@ export class SinglePageComponent implements OnInit {
     private router: Router,
     private sanitizer: DomSanitizer,
     private authService: AuthService,
-    private socketService: SocketService
+    private socketService: SocketService,
+    private errorService: ErrorService,
   ) {}
 
   ngOnInit(): void {
@@ -134,8 +137,9 @@ export class SinglePageComponent implements OnInit {
         console.log(this.post);
       },
       error: (err) => {
+        const errorMessages = err.error?.errors || ['Failed to fetch post:'];
+        errorMessages.forEach((message: string) => this.errorService.setError(message));
         console.error('Failed to fetch post:', err);
-        alert('Failed to fetch post');
       },
       complete: () => {
         this.loading = false;
@@ -153,7 +157,8 @@ export class SinglePageComponent implements OnInit {
       },
       error: (err) => {
         console.error('Failed to delete post:', err);
-        alert('Failed to delete post');
+        const errorMessages = err.error?.errors || ['Failed to delete post:'];
+        errorMessages.forEach((message: string) => this.errorService.setError(message));
       },
     });
   }

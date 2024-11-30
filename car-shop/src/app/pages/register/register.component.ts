@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth-service.service';
-import { ErrorService } from '../../services/error.service'; 
+import { ErrorService } from '../../services/error.service';
+import { ErrorPopUpComponent } from "../../shared/error-popup/error-popup.component"; 
 
 @Component({
   selector: 'app-register',
-  imports:[RouterLink],
+  imports: [RouterLink, ErrorPopUpComponent],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
@@ -29,7 +30,7 @@ export class RegisterComponent {
       next: () => this.router.navigate(['/login']),
       error: (err) => {
         const errorMessages = err.error?.errors || ['Registration failed'];
-        errorMessages.forEach((message: string) => this.errorService.showError(message));
+        errorMessages.forEach((message: string) => this.errorService.setError(message));
       }
     });
   }

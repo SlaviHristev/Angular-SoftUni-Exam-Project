@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth-service.service';
 import { ErrorService } from '../../services/error.service';
+import { ErrorPopUpComponent } from "../../shared/error-popup/error-popup.component";
 
 @Component({
   selector: 'app-login',
-  imports:[RouterLink],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  imports: [ErrorPopUpComponent]
 })
 export class LoginComponent {
   constructor(
@@ -16,15 +17,13 @@ export class LoginComponent {
     private router: Router
   ) {}
 
-  handleSubmit(event: Event) {
+  handleSubmit(event: Event): void {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
-
     const formData = new FormData(form);
     const username = formData.get('username') as string;
     const password = formData.get('password') as string;
-    console.log(username, password);
-    
+
     this.authService.login(username, password).subscribe({
       next: (user) => {
         this.authService.updateUser(user);
@@ -32,7 +31,7 @@ export class LoginComponent {
       },
       error: (err) => {
         const errorMessage = err.error?.message || 'Login failed';
-        this.errorService.showError(errorMessage);
+        this.errorService.setError(errorMessage); 
       }
     });
   }
