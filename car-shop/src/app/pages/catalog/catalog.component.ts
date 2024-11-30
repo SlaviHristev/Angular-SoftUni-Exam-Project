@@ -3,12 +3,13 @@ import { ActivatedRoute } from '@angular/router';
 import { ApiRequestService } from '../../services/api-request.service';
 import { CardComponent } from "../../shared/card/card.component";
 import { SpinnerComponent } from "../../shared/spinner/spinner.component";
+import { SearchBarComponent } from "../../shared/search-bar/search-bar.component";
 
 @Component({
   selector: 'app-catalog',
   templateUrl: './catalog.component.html',
   styleUrls: ['./catalog.component.scss'],
-  imports: [CardComponent, SpinnerComponent]
+  imports: [CardComponent, SpinnerComponent, SearchBarComponent]
 })
 export class CatalogComponent implements OnInit {
   posts: any[] = [];
@@ -32,7 +33,7 @@ export class CatalogComponent implements OnInit {
 
       
       if (fuelType || category || city || minPrice || maxPrice) {
-        this.apiRequestService.get('/posts/search', {
+        this.apiRequestService.get('posts/search', {
           params: {
             fuelType,
             category,

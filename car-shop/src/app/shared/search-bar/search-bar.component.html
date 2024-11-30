@@ -1,0 +1,56 @@
+<div class="searchBar">
+  <div class="type">
+    <select
+      name="fuelType"
+      [value]="query.fuelType"
+      (change)="handleChange($event, 'fuelType')"
+    >
+      @for (type of fuelTypes; track $index) {
+      <option [value]="type">
+        {{ type }}
+      </option>
+      }
+    </select>
+  </div>
+  <div class="type">
+    <select
+      name="category"
+      [value]="query.category"
+      (change)="handleChange($event, 'category')"
+    >
+    @for (type of categories; track $index) {
+
+        <option [value]="type">
+            {{ type }}
+        </option>
+    }
+    </select>
+  </div>
+  <form (submit)="search()">
+    <input
+      type="text"
+      name="city"
+      placeholder="City"
+      (input)="handleChange($event, 'city')"
+    />
+    <input
+      type="number"
+      name="minPrice"
+      min="0"
+      max="10000000"
+      placeholder="Min Price"
+      (input)="handleChange($event, 'minPrice')"
+    />
+    <input
+      type="number"
+      name="maxPrice"
+      min="0"
+      max="10000000"
+      placeholder="Max Price"
+      (input)="handleChange($event, 'maxPrice')"
+    />
+    <button type="submit">
+      <img src="/search.png" alt="Search" />
+    </button>
+  </form>
+</div>

@@ -5,10 +5,11 @@ import { SpinnerComponent } from "../../shared/spinner/spinner.component";
 import { CardSliderComponent } from "../../shared/card-slider/card-slider.component";
 import { ErrorPopUpComponent } from "../../shared/error-popup/error-popup.component";
 import { ErrorService } from '../../services/error.service';
+import { SearchBarComponent } from "../../shared/search-bar/search-bar.component";
 
 @Component({
   selector: 'app-home',
-  imports: [SpinnerComponent, CardSliderComponent, ErrorPopUpComponent],
+  imports: [SpinnerComponent, CardSliderComponent, ErrorPopUpComponent, SearchBarComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
