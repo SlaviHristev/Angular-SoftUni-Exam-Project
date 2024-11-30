@@ -78,6 +78,7 @@ export const savePost = async (req, res) => {
 
 export const getSavedPosts = async(req,res)=>{
     const {id} = req.params;
+    console.log(`getting`, id);
     
     try {
         const user = await User.findById(id).populate('savedPosts');

@@ -11,6 +11,7 @@ import { SinglePageComponent } from './pages/single-page/single-page.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { ProfileUpdateComponent } from './pages/profile-update/profile-update.component';
 import { EditComponent } from './pages/edit-page/edit-page.component';
+import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -21,6 +22,7 @@ export const routes: Routes = [
     {path: 'register', component: RegisterComponent},
     {path: 'create', component: CreateComponent},
     {path: 'profile', component: ProfileComponent},
+    {path: 'profiles/:id', component: UserProfileComponent},
     {path: 'profile/update', component: ProfileUpdateComponent},
     {path: 'edit/:id', component: EditComponent},
     {path: 'catalog', children:[

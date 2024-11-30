@@ -57,7 +57,7 @@ export class ProfileComponent implements OnInit {
   fetchSavedPosts() {
     this.apiService.get(`users/${this.currentUser._id}/saved`).subscribe({
       next: (response: any) => {
-        this.savedPosts = response?.data || []; 
+        this.savedPosts = response || []; 
       },
       error: (error) => {
         console.error('Failed to fetch saved posts:', error);

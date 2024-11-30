@@ -1,0 +1,39 @@
+@if (!loading) {
+<div class="userProfile">
+  <div class="userInfo">
+    <img [src]="profile?.avatar || '/noavatar.jpg'" alt="User Avatar" />
+    <h2>{{ profile?.username }}</h2>
+    <p>{{ profile?.email }}</p>
+    @if (currentUser) {
+    <button (click)="openChat(profile._id)">
+      <img src="/chat.png" alt="Chat Icon" />
+      Send a Message
+    </button>
+    }
+  </div>
+
+  <div class="profilePosts">
+    <h3>Posts</h3>
+    @if (posts.length > 0) {
+        <div>
+            @for (post of posts; track $index) {
+                <app-card [item]="post"></app-card>
+            }
+        </div>
+    }@else {
+        <p>No posts available</p>
+    }
+  </div>
+  <!--   
+        <app-modal *ngIf="isChatOpen" (close)="closeChat()">
+          <app-chat
+            [receiver]="chatReceiver"
+            [chatId]="chatId"
+            [currentUser]="currentUser"
+            (close)="closeChat()"
+          ></app-chat>
+        </app-modal> -->
+</div>
+}@else {
+<app-spinner />
+}

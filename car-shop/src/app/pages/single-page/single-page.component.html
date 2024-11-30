@@ -26,6 +26,7 @@
               <img [src]="currentUser?.avatar || '/noavatar.jpg'" alt="" />
               <span>{{ currentUser?.username }} (You)</span>
             </div>
+          }
             @if (!isOwner()) {
             <a [routerLink]="['/profiles', post.ownerId?._id]">
               <div class="user">
@@ -33,7 +34,7 @@
                 <span>{{ post.ownerId?.username }}</span>
               </div>
             </a>
-            } }
+            } 
           </div>
 
           <div
