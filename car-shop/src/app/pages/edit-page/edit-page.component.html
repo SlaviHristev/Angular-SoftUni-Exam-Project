@@ -37,6 +37,11 @@
             min="1"
             required
           />
+          @if (editForm.get('yearOfMake')?.invalid && editForm.get('yearOfMake')?.touched)
+          {
+          <div>Year of make must be greater than 0.</div>
+          }
+          
         </div>
 
         <div class="item">
@@ -48,16 +53,28 @@
             min="1"
             required
           />
+          @if (editForm.get('horsePower')?.invalid && editForm.get('horsePower')?.touched)
+          {
+          <div>Horse Power must be greater than 0.</div>
+          }
         </div>
 
         <div class="item">
           <label for="color">Color</label>
           <input type="text" id="color" formControlName="color" required />
+          @if (editForm.get('color')?.invalid && editForm.get('color')?.touched)
+          {
+          <div>Color must be at least 3 characters long.</div>
+          }
         </div>
 
         <div class="item">
           <label for="city">City</label>
           <input type="text" id="city" formControlName="city" required />
+          @if (editForm.get('city')?.invalid && editForm.get('city')?.touched)
+          {
+          <div>City must be at least 3 characters long.</div>
+          }
         </div>
 
         <div class="item">

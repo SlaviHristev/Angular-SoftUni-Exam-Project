@@ -42,7 +42,6 @@ export class CardComponent implements OnInit {
     this.apiService.get(`users/${this.currentUser._id}/saved`).subscribe({
       next: (response: any) => {
         const savedPosts = response || [];
-        console.log(response);
         
         this.isSaved = savedPosts.some(
           (savedPost: any) => savedPost._id === this.item?._id

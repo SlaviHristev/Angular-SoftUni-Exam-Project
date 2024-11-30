@@ -17,9 +17,10 @@ export class RegisterComponent {
     private router: Router
   ) {}
 
+
   handleSubmit(event: Event) {
     event.preventDefault();
-    const form = event.target as HTMLFormElement;
+    const form  = event.target as HTMLFormElement;
     const formData = new FormData(form);
 
     const username = formData.get('username') as string;

@@ -25,16 +25,16 @@ export class CreateComponent implements OnInit {
   ) {
   
     this.createForm = this.fb.group({
-      title: ['', [Validators.required]],
+      title: ['', [Validators.required, Validators.min(4)]],
       price: ['', [Validators.required, Validators.min(1)]],
       yearOfMake: ['', [Validators.required, Validators.min(1)]],
       horsePower: ['', [Validators.required, Validators.min(1)]],
-      color: ['', [Validators.required]],
-      city: ['', [Validators.required]],
+      color: ['', [Validators.required, Validators.min(3)]],
+      city: ['', [Validators.required,Validators.min(3)]],
       category: ['', [Validators.required]],
       fuelType: ['', [Validators.required]],
       transmission: ['', [Validators.required]],
-      description: ['', [Validators.required]]
+      description: ['', [Validators.required,Validators.min(10)]]
     });
   }
 

@@ -105,7 +105,7 @@ export class EditComponent implements OnInit {
   }
 
   checkIsOwner(): void {
-    if (this.currentPost.ownerId !== this.authService.getCurrentUser()?._id) {
+    if (this.currentPost.ownerId._id !== this.authService.getCurrentUser()?._id) {
 
       this.router.navigate(['/']);
     }

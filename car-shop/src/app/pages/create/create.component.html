@@ -7,31 +7,55 @@
           <div class="item">
             <label for="title">Title</label>
             <input id="title" formControlName="title" type="text" required />
+            @if (createForm.get('title')?.invalid && createForm.get('title')?.touched)
+            {
+            <div>Title must be at least 4 characters.</div>
+            }
           </div>
   
           <div class="item">
             <label for="price">Price</label>
             <input id="price" formControlName="price" type="number" min="1" required />
+            @if (createForm.get('price')?.invalid && createForm.get('price')?.touched)
+            {
+            <div>Price must be greater than 0.</div>
+            }
           </div>
   
           <div class="item">
             <label for="yearOfMake">Year of Make</label>
             <input id="yearOfMake" formControlName="yearOfMake" type="number" min="1" required />
+            @if (createForm.get('yearOfMake')?.invalid && createForm.get('yearOfMake')?.touched)
+            {
+            <div>Year of make must be greater than 0.</div>
+            }
           </div>
   
           <div class="item">
             <label for="horsePower">Engine Power</label>
             <input id="horsePower" formControlName="horsePower" type="number" min="1" required />
+            @if (createForm.get('yearOfMake')?.invalid && createForm.get('yearOfMake')?.touched)
+            {
+            <div>Horse Power must be greater than 0.</div>
+            }
           </div>
   
           <div class="item">
             <label for="color">Color</label>
             <input id="color" formControlName="color" type="text" required />
+            @if (createForm.get('color')?.invalid && createForm.get('color')?.touched)
+            {
+            <div>Color must be at least 3 characters long.</div>
+            }
           </div>
   
           <div class="item">
             <label for="city">City</label>
             <input id="city" formControlName="city" type="text" required />
+            @if (createForm.get('city')?.invalid && createForm.get('city')?.touched)
+            {
+            <div>City must be at least 3 characters long.</div>
+            }
           </div>
   
           <div class="item">
@@ -66,6 +90,10 @@
           <div class="item description">
             <label for="description">Description</label>
             <textarea formControlName="description" id="description" required></textarea>
+            @if (createForm.get('description')?.invalid && createForm.get('description')?.touched)
+            {
+            <div>Description must be at least 10 characters long.</div>
+            }
           </div>
   
           <button class="send" type="submit" [disabled]="createForm.invalid">Add</button>
