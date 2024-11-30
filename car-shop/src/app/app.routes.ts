@@ -12,6 +12,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { ProfileUpdateComponent } from './pages/profile-update/profile-update.component';
 import { EditComponent } from './pages/edit-page/edit-page.component';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
+import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
     {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -20,11 +21,11 @@ export const routes: Routes = [
     {path: 'contact', component: ContactComponent},
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
-    {path: 'create', component: CreateComponent},
-    {path: 'profile', component: ProfileComponent},
+    {path: 'create', component: CreateComponent, canActivate:[AuthGuard]},
+    {path: 'profile', component: ProfileComponent, canActivate:[AuthGuard]},
     {path: 'profiles/:id', component: UserProfileComponent},
-    {path: 'profile/update', component: ProfileUpdateComponent},
-    {path: 'edit/:id', component: EditComponent},
+    {path: 'profile/update', component: ProfileUpdateComponent,canActivate:[AuthGuard]},
+    {path: 'edit/:id', component: EditComponent, canActivate:[AuthGuard]},
     {path: 'catalog', children:[
         {path:'', component:CatalogComponent},
         {path:':id', component: SinglePageComponent},

@@ -24,7 +24,9 @@ export class EditComponent implements OnInit {
   };
   loading: boolean = true;
   currentPost: any;
+  ownerId: string | undefined;
   postId!: string;
+  isOwner!: boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -37,11 +39,7 @@ export class EditComponent implements OnInit {
 
   ngOnInit(): void {
     this.postId = this.route.snapshot.paramMap.get('id') || '';
-    console.log(this.postId);
-    
     this.loadPost();
-    console.log();
-    
 
     this.editForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(4)]],
@@ -56,15 +54,17 @@ export class EditComponent implements OnInit {
       description: ['', [Validators.required, Validators.minLength(10)]]
     });
   }
-
+ 
   loadPost(): void {
     this.apiService.get(`posts/${this.postId}`).subscribe({
       next: (response: any) => {
-        this.currentPost = response; 
+        this.currentPost = response;
         this.editForm.patchValue(this.currentPost);
         this.images = this.currentPost.images || [];
         this.description = this.currentPost.description || '';
         this.loading = false;
+
+        this.checkIsOwner(); 
       },
       error: (err) => {
         this.router.navigate(['/']);
@@ -101,5 +101,12 @@ export class EditComponent implements OnInit {
 
   deleteImage(index: number): void {
     this.images.splice(index, 1);
+  }
+
+  checkIsOwner(): void {
+    if (this.currentPost.ownerId !== this.authService.getCurrentUser()?._id) {
+
+      this.router.navigate(['/']);
+    }
   }
 }
