@@ -5,7 +5,6 @@
     <div class="wrapper">
       <div class="details">
         <app-slider [images]="post.images"></app-slider>
-       
 
         <div class="info">
           <div class="top">
@@ -23,7 +22,6 @@
             </div>
 
             @if (isOwner()) {
-
             <div class="user">
               <img [src]="currentUser?.avatar || '/noavatar.jpg'" alt="" />
               <span>{{ currentUser?.username }} (You)</span>
@@ -109,6 +107,19 @@
           <img src="/delete.png" alt="" />
           Delete
         </button>
+        }
+        @if(!isOwner() && currentUser){
+        
+          <button
+            [style]="{ backgroundColor: isSaved ? 'orange' : 'inherit' }"
+            (click)="toggleSavePost()"
+          >
+            <img src="/save.png" alt="Save" />
+          </button>
+          <button>
+            <img src="/chat.png" alt="Chat Icon" />
+          </button>
+
         }
       </div>
     </div>

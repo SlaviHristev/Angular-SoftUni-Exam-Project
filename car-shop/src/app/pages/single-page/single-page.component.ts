@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiRequestService } from '../../services/api-request.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SpinnerComponent } from "../../shared/spinner/spinner.component";
 import { AuthService } from '../../services/auth-service.service';
 import { SliderComponent } from "../../shared/slider/slider.component";
+import { SocketService } from '../../services/socket-service.service';
 
 
 @Component({
@@ -14,9 +15,12 @@ import { SliderComponent } from "../../shared/slider/slider.component";
   imports: [SpinnerComponent, RouterLink, SliderComponent],
 })
 export class SinglePageComponent implements OnInit {
+  
   post: any = null;
   loading = true;
   currentUser: any = null; 
+  @Input() isSaved: boolean = false; 
+  @Output() savedStatusChange = new EventEmitter<boolean>();
 
   constructor(
     private apiRequestService: ApiRequestService,
@@ -24,6 +28,7 @@ export class SinglePageComponent implements OnInit {
     private router: Router,
     private sanitizer: DomSanitizer,
     private authService: AuthService,
+    private socketService: SocketService
   ) {}
 
   ngOnInit(): void {
@@ -31,6 +36,87 @@ export class SinglePageComponent implements OnInit {
     this.currentUser = this.authService.getCurrentUser(); 
 
     this.fetchPost();
+  }
+
+  fetchSavedStatus(): void {
+    this.apiRequestService.get(`users/${this.currentUser._id}/saved`).subscribe({
+      next: (response: any) => {
+        const savedPosts = response || [];
+        console.log(response);
+        
+        this.isSaved = savedPosts.some(
+          (savedPost: any) => savedPost._id === this.post?._id
+        );
+      },
+      error: (err) => {
+        console.error('Failed to fetch saved posts:', err);
+      },
+    });
+  }
+
+  toggleSavePost(): void {
+    if (!this.currentUser) {
+      console.error('User not logged in');
+      return;
+    }
+
+    if (this.isSaved) {
+      this.apiRequestService
+        .unSavePost(`users/save/${this.post._id}`, {userId: this.currentUser._id})
+        .subscribe({
+          next: () => {
+            this.isSaved = false;
+            this.savedStatusChange.emit(this.isSaved);
+            console.log('Post unsaved successfully');
+          },
+          error: (err) => {
+            console.error('Failed to unsave post:', err);
+          },
+        });
+    } else {
+      this.apiRequestService
+        .post(`users/save/${this.post._id}`, {userId: this.currentUser._id})
+        .subscribe({
+          next: () => {
+            this.isSaved = true;
+            this.savedStatusChange.emit(this.isSaved);
+            console.log('Post saved successfully');
+
+            this.sendSaveNotification();
+          },
+          error: (err) => {
+            console.error('Failed to save post:', err);
+          },
+        });
+    }
+  }
+
+  sendSaveNotification(): void {
+    const notification = {
+      senderId: this.currentUser._id,
+      receiverId: this.post.ownerId._id || this.post.ownerId,
+      message: `${this.currentUser.username} saved your post.`,
+    };
+
+
+    if (this.socketService.socket) {
+      this.socketService.socket.emit('sendNotification', notification);
+    }
+
+    this.apiRequestService
+      .post(`notifications/${notification.receiverId}`, {
+        userId: notification.receiverId,
+        type: 'save',
+        message: notification.message,
+      })
+      .subscribe({
+        next: () => {
+          console.log('Notification sent successfully');
+        },
+        error: (err) => {
+          console.error('Failed to send notification:', err);
+        },
+      });
   }
 
   fetchPost(): void {
