@@ -28,6 +28,13 @@
       </div>
       @if (!isOwner() && currentUser) {
       <div class="icons">
+        <!-- style={{ backgroundColor: isSaved ? "orange" : "inherit" }} -->
+        <div 
+        class="icon" 
+        [style]="{ backgroundColor: isSaved ? 'orange' : 'inherit' }" 
+        (click)="toggleSavePost()">
+        <img src="/save.png" alt="Save" />
+      </div>
         <div class="icon" (click)="openChat(item?.ownerId)">
           <img src="/chat.png" alt="Chat Icon" />
         </div>

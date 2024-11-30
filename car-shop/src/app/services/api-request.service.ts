@@ -45,4 +45,10 @@ export class ApiRequestService {
       withCredentials: true,
     });
   }
+
+  unSavePost<T>(endpoint: string, data: any): Observable<T> {
+    return this.http.post<T>(`${this.baseURL}/${endpoint}`, data, {
+      withCredentials: true,
+    });
+  }
 }
