@@ -2,6 +2,8 @@ import Chat from "../Models/Chat.js";
 
 export const startChat = async (req, res) => {
     const { userId1, userId2 } = req.body;
+    console.log(`users`, userId1, userId2);
+    
 
   try {
     let chat = await Chat.findOne({ userIds: { $all: [userId1, userId2] } });

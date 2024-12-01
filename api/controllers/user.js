@@ -112,9 +112,11 @@ export const getMyUser = async(req,res) =>{
 
 
 export const getOtherUser = async(req,res) =>{
-    const {id} = req.params;
+    const {ownerId} = req.params;
+    console.log(`test`, ownerId);
+    
     try {
-        const user = await User.findById(id).select('avatar username email');
+        const user = await User.findById(ownerId).select('avatar username email');
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }

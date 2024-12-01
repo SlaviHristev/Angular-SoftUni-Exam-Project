@@ -14,15 +14,15 @@ export class ChatService {
   chatReceiver$ = this.chatReceiverSubject.asObservable();
   chatId$ = this.chatIdSubject.asObservable();
 
-  private readonly API_BASE_URL = 'http://localhost:8880';
+  private readonly API_BASE_URL = 'http://localhost:8800/api';
 
   constructor(private http: HttpClient) {}
 
   openChat(currentUserId: string, ownerId: string): void {
-    this.http.get(`${this.API_BASE_URL}/users/${ownerId}`).subscribe({
+    this.http.get(`${this.API_BASE_URL}/users/profiles/${ownerId}`, {withCredentials: true}).subscribe({
       next: (receiver: any) => {
         this.chatReceiverSubject.next(receiver);
-
+  
         this.http
           .post(`${this.API_BASE_URL}/chats/startChat`, {
             userId1: currentUserId,
@@ -39,7 +39,11 @@ export class ChatService {
           });
       },
       error: (error) => {
-        console.error('Failed to fetch chat receiver:', error);
+        if (error.status === 0) {
+          console.error('Failed to connect to the backend server. Please ensure the server is running.', error);
+        } else {
+          console.error('Failed to fetch chat receiver:', error);
+        }
       },
     });
   }

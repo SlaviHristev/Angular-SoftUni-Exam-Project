@@ -9,6 +9,7 @@ import { ErrorPopUpComponent } from "../../shared/error-popup/error-popup.compon
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ChatComponent } from "../../shared/chat/chat.component";
 import { ModalComponent } from "../../shared/modal/modal.component";
+import { ChatService } from '../../services/chat.service';
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
@@ -38,6 +39,7 @@ export class UserProfileComponent implements OnInit {
     private apiRequestService: ApiRequestService,
     private authService: AuthService,
     private errorService: ErrorService,
+    private chatService: ChatService,
 
 
   ) {
@@ -76,11 +78,12 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
-  openChat(receiverId: string): void {
-    this.chatReceiver = receiverId;
-    this.chatId = ''; 
-    this.isChatOpen = true;
+  openChat(ownerId: string): void {
+    console.log(ownerId);
+    
+    this.chatService.openChat(this.currentUser._id, ownerId);
   }
+
 
   closeChat(): void {
     this.isChatOpen = false;

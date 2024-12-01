@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get('/:id', getMyUser);
 router.get('/:id/saved', getSavedPosts);
-router.get('/profiles/:id', getOtherUser);
+router.get('/profiles/:ownerId', getOtherUser);
 router.post('/save/:id', savePost);
 router.put('/:id',verifyToken, updateUser);
 
