@@ -6,12 +6,20 @@ import { AuthService } from '../../services/auth-service.service';
 import { UploadWidgetComponent } from "../../shared/upload-widget/upload-widget.component";
 import { ErrorService } from '../../services/error.service';
 import { ErrorPopUpComponent } from "../../shared/error-popup/error-popup.component";
-
+import { animate, style, transition, trigger } from '@angular/animations';
 @Component({
   selector: 'app-edit',
   templateUrl: './edit-page.component.html',
   styleUrls: ['./edit-page.component.scss'],
-  imports: [ReactiveFormsModule, UploadWidgetComponent, ErrorPopUpComponent]
+  imports: [ReactiveFormsModule, UploadWidgetComponent, ErrorPopUpComponent],
+  animations: [
+    trigger('slideInFromLeft', [
+      transition(':enter', [
+        style({ transform: 'translateX(-100%)', opacity: 0 }),
+        animate('500ms ease-in-out', style({ transform: 'translateX(0)', opacity: 1 }))
+      ])
+    ])
+  ]
 })
 export class EditComponent implements OnInit {
   editForm!: FormGroup;

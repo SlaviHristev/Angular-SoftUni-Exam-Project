@@ -6,12 +6,21 @@ import { CardSliderComponent } from "../../shared/card-slider/card-slider.compon
 import { ErrorPopUpComponent } from "../../shared/error-popup/error-popup.component";
 import { ErrorService } from '../../services/error.service';
 import { SearchBarComponent } from "../../shared/search-bar/search-bar.component";
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-home',
   imports: [SpinnerComponent, CardSliderComponent, ErrorPopUpComponent, SearchBarComponent],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  styleUrl: './home.component.scss',
+  animations: [
+    trigger('slideInFromRight', [
+      transition(':enter', [
+        style({ transform: 'translateX(100%)', opacity: 0 }),
+        animate('500ms ease-in-out', style({ transform: 'translateX(0)', opacity: 1 }))
+      ])
+    ])
+  ]
 })
 export class HomeComponent implements OnInit {
   recentCars: any[] = [];

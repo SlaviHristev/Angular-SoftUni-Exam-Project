@@ -1,6 +1,6 @@
 <div class="edit">
   <app-error-pop-up/>
-  <div class="formContainer">
+  <div class="formContainer" [@slideInFromLeft]>
     <h1>Edit your Car Info</h1>
     <div class="wrapper">
       <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
@@ -125,7 +125,7 @@
     </div>
   </div>
   <div class="sideContainer">
-    <div class="images">
+    <div class="images" [@slideInFromLeft]>
       <h2>Images</h2>
       @if (images) {
       <div>
@@ -133,7 +133,7 @@
           @for (image of images; track $index) {
 
           <img [src]="image" alt="" />
-          <button (click)="deleteImage($index)">
+          <button (click)="deleteImage($index)" [@slideInFromLeft]>
             <img src="/delete.png" alt="Delete" />
           </button>
           }

@@ -1,6 +1,6 @@
 <div class="login">
 <app-error-pop-up/>
-    <div class="formContainer">
+    <div class="formContainer" [@slideInFromLeft]>
       <form (submit)="handleSubmit($event)">
         <h1>Welcome back</h1>
         <input type="text" name="username" placeholder="Username" required />
@@ -17,6 +17,6 @@
   
    
     <div class="imgContainer">
-      <img src="/background3.png" alt="Background" />
+      <img src="/background3.png" alt="Background" [@slideInFromLeft]/>
     </div>
   </div>

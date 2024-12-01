@@ -1,6 +1,6 @@
 <div class="profileUpdate">
   <app-error-pop-up/>
-    <div class="formContainer">
+    <div class="formContainer" [@slideInFromTop]>
       <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
         <h1>Update Profile</h1>
         <div class="item">
@@ -32,13 +32,14 @@
       </form>
     </div>
   
-    <div class="sideContainer">
+    <div class="sideContainer" >
       <img
         [src]="avatar[0] || currentUser?.avatar || '/noavatar.jpg'"
         alt="User Avatar"
         class="avatar"
+        [@slideInFromTop]
       />
-      <app-upload-widget (imagesUploaded)="handleImageUpload($event)"></app-upload-widget>
+      <app-upload-widget  [@slideInFromTop] (imagesUploaded)="handleImageUpload($event)"></app-upload-widget>
 
     </div>
   </div>

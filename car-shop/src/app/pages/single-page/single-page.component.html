@@ -2,7 +2,7 @@
   <app-error-pop-up/>
   @if (!loading && post) {
 
-  <div class="details">
+  <div class="details" [@slideInFromRight]>
     <div class="wrapper">
       <div class="details">
         <app-slider [images]="post.images"></app-slider>
@@ -50,7 +50,7 @@
   @if (!loading && post) {
 
   <div class="features">
-    <div class="wrapper">
+    <div class="wrapper" [@slideInFromRight]>
       <p class="title">General</p>
       <div class="listVertical">
         <div class="feature">

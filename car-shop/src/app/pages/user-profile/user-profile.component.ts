@@ -7,12 +7,20 @@ import { SpinnerComponent } from "../../shared/spinner/spinner.component";
 import { CardComponent } from "../../shared/card/card.component";
 import { ErrorPopUpComponent } from "../../shared/error-popup/error-popup.component";
 // import { ChatService } from '../../services/chat.service';
-
+import { animate, style, transition, trigger } from '@angular/animations';
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.scss'],
-  imports: [SpinnerComponent, CardComponent, ErrorPopUpComponent]
+  imports: [SpinnerComponent, CardComponent, ErrorPopUpComponent],
+  animations: [
+    trigger('slideInFromBottom', [
+      transition(':enter', [
+        style({ transform: 'translateY(100%)', opacity: 0 }),
+        animate('500ms ease-in-out', style({ transform: 'translateY(0)', opacity: 1 }))
+      ])
+    ])
+  ]
 })
 export class UserProfileComponent implements OnInit {
   userId: string = '';

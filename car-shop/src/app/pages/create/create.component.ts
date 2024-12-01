@@ -5,12 +5,21 @@ import { ApiRequestService } from '../../services/api-request.service';
 import { UploadWidgetComponent } from '../../shared/upload-widget/upload-widget.component';
 import { ErrorPopUpComponent } from "../../shared/error-popup/error-popup.component";
 import { ErrorService } from '../../services/error.service';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss'],
-  imports: [UploadWidgetComponent, ReactiveFormsModule, ErrorPopUpComponent]
+  imports: [UploadWidgetComponent, ReactiveFormsModule, ErrorPopUpComponent],
+  animations: [
+    trigger('slideInFromBottom', [
+      transition(':enter', [
+        style({ transform: 'translateY(100%)', opacity: 0 }),
+        animate('500ms ease-in-out', style({ transform: 'translateY(0)', opacity: 1 }))
+      ])
+    ])
+  ]
 })
 export class CreateComponent implements OnInit {
   createForm: FormGroup;

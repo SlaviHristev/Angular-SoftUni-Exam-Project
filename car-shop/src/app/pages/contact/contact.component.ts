@@ -1,11 +1,20 @@
 import { Component, ElementRef, ViewChild, } from '@angular/core';
 import emailjs from '@emailjs/browser';
-
+import { animate, style, transition, trigger } from '@angular/animations';
 @Component({
   selector: 'app-contact',
   imports: [],
   templateUrl: './contact.component.html',
-  styleUrl: './contact.component.scss'
+  styleUrl: './contact.component.scss',
+  animations: [
+    trigger('slideInFromTop', [
+      transition(':enter', [
+        style({ transform: 'translateY(-100%)', opacity: 0 }),
+        animate('500ms ease-in-out', style({ transform: 'translateY(0)', opacity:   
+ 1 }))
+      ])
+    ])
+  ]
 })
 export class ContactComponent {
   @ViewChild('formRef') formRef!: ElementRef;

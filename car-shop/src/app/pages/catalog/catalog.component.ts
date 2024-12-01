@@ -4,12 +4,21 @@ import { ApiRequestService } from '../../services/api-request.service';
 import { CardComponent } from "../../shared/card/card.component";
 import { SpinnerComponent } from "../../shared/spinner/spinner.component";
 import { SearchBarComponent } from "../../shared/search-bar/search-bar.component";
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-catalog',
   templateUrl: './catalog.component.html',
   styleUrls: ['./catalog.component.scss'],
-  imports: [CardComponent, SpinnerComponent, SearchBarComponent]
+  imports: [CardComponent, SpinnerComponent, SearchBarComponent],
+  animations: [
+    trigger('slideInFromLeft', [
+      transition(':enter', [
+        style({ transform: 'translateX(-100%)', opacity: 0 }),
+        animate('500ms ease-in-out', style({ transform: 'translateX(0)', opacity: 1 }))
+      ])
+    ])
+  ]
 })
 export class CatalogComponent implements OnInit {
   posts: any[] = [];

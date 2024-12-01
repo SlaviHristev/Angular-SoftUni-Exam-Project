@@ -1,6 +1,6 @@
-<div class="profile">
+<div class="profile" >
   <app-error-pop-up/>
-    <div class="details">
+    <div class="details"[@slideInFromBottom] >
       <div class="wrapper">
         <div class="title">
           <h1>User Information</h1>
@@ -23,7 +23,7 @@
             @if (userPosts.length > 0) {
                 <div>
                     @for (post of userPosts; track $index) {
-                        <app-card [item]="post" class="post"></app-card>
+                        <app-card [item]="post" class="post" ></app-card>
                     }
                   </div>
             }@else {
@@ -54,8 +54,8 @@
       </div>
     </div>
   
-    <div class="container">
-      <div class="messages">
+    <div class="container" >
+      <div class="messages" [@slideInFromBottom]>
         <h1>Messages</h1>
         <!-- <div *ngIf="chats.length > 0; else noChats">
           <div

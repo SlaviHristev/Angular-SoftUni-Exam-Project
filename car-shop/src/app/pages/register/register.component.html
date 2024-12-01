@@ -1,6 +1,6 @@
 <div class="register">
     <app-error-pop-up/>
-    <div class="formContainer">
+    <div class="formContainer" [@slideInFromRight]>
       <form (submit)="handleSubmit($event)">
         <h1>Create an Account</h1>
         <input type="text" name="username" placeholder="Username" required />
@@ -13,6 +13,6 @@
   
 
     <div class="imgContainer">
-      <img src="/background2.png" alt="Background Image" />
+      <img src="/background2.png" alt="Background Image" [@slideInFromRight]/>
     </div>
   </div>

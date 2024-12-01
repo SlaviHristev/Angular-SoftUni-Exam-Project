@@ -1,6 +1,6 @@
 @if (!loading) {
     <app-error-pop-up/>
-<div class="userProfile">
+<div class="userProfile" [@slideInFromBottom]>
   <div class="userInfo">
     <img [src]="profile?.avatar || '/noavatar.jpg'" alt="User Avatar" />
     <h2>{{ profile?.username }}</h2>

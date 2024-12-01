@@ -8,13 +8,21 @@ import { SliderComponent } from "../../shared/slider/slider.component";
 import { SocketService } from '../../services/socket-service.service';
 import { ErrorService } from '../../services/error.service';
 import { ErrorPopUpComponent } from "../../shared/error-popup/error-popup.component";
-
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-single-page',
   templateUrl: './single-page.component.html',
   styleUrls: ['./single-page.component.scss'],
   imports: [SpinnerComponent, RouterLink, SliderComponent, ErrorPopUpComponent],
+  animations: [
+    trigger('slideInFromRight', [
+      transition(':enter', [
+        style({ transform: 'translateX(100%)', opacity: 0 }),
+        animate('500ms ease-in-out', style({ transform: 'translateX(0)', opacity: 1 }))
+      ])
+    ])
+  ]
 })
 export class SinglePageComponent implements OnInit {
   

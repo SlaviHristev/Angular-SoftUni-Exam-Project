@@ -3,12 +3,21 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth-service.service';
 import { ErrorService } from '../../services/error.service';
 import { ErrorPopUpComponent } from "../../shared/error-popup/error-popup.component";
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  imports: [ErrorPopUpComponent]
+  imports: [ErrorPopUpComponent],
+  animations: [
+    trigger('slideInFromLeft', [
+      transition(':enter', [
+        style({ transform: 'translateX(-100%)', opacity: 0 }),
+        animate('500ms ease-in-out', style({ transform: 'translateX(0)', opacity: 1 }))
+      ])
+    ])
+  ]
 })
 export class LoginComponent {
   constructor(

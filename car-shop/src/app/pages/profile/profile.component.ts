@@ -5,12 +5,21 @@ import { CardComponent } from "../../shared/card/card.component";
 import { RouterLink } from '@angular/router';
 import { ErrorPopUpComponent } from "../../shared/error-popup/error-popup.component";
 import { ErrorService } from '../../services/error.service';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
-  imports: [CardComponent, RouterLink, ErrorPopUpComponent]
+  imports: [CardComponent, RouterLink, ErrorPopUpComponent],
+  animations: [
+    trigger('slideInFromBottom', [
+      transition(':enter', [
+        style({ transform: 'translateY(100%)', opacity: 0 }),
+        animate('500ms ease-in-out', style({ transform: 'translateY(0)', opacity: 1 }))
+      ])
+    ])
+  ]
 })
 export class ProfileComponent implements OnInit {
   currentUser: any;

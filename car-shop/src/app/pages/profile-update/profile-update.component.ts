@@ -7,12 +7,21 @@ import { UploadWidgetComponent } from "../../shared/upload-widget/upload-widget.
 import { User } from '../../types/User';  
 import { ErrorService } from '../../services/error.service';
 import { ErrorPopUpComponent } from "../../shared/error-popup/error-popup.component";
-
+import { animate, style, transition, trigger } from '@angular/animations';
 @Component({
   selector: 'app-profile-update',
   templateUrl: './profile-update.component.html',
   styleUrls: ['./profile-update.component.scss'],
-  imports: [UploadWidgetComponent, ReactiveFormsModule, ErrorPopUpComponent]
+  imports: [UploadWidgetComponent, ReactiveFormsModule, ErrorPopUpComponent],
+  animations: [
+    trigger('slideInFromTop', [
+      transition(':enter', [
+        style({ transform: 'translateY(-100%)', opacity: 0 }),
+        animate('500ms ease-in-out', style({ transform: 'translateY(0)', opacity:   
+ 1 }))
+      ])
+    ])
+  ]
 })
 export class ProfileUpdateComponent implements OnInit {
   profileForm!: FormGroup;

@@ -3,12 +3,21 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth-service.service';
 import { ErrorService } from '../../services/error.service';
 import { ErrorPopUpComponent } from "../../shared/error-popup/error-popup.component"; 
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-register',
   imports: [RouterLink, ErrorPopUpComponent],
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: ['./register.component.scss'],
+  animations: [
+    trigger('slideInFromRight', [
+      transition(':enter', [
+        style({ transform: 'translateX(100%)', opacity: 0 }),
+        animate('500ms ease-in-out', style({ transform: 'translateX(0)', opacity: 1 }))
+      ])
+    ])
+  ]
 })
 export class RegisterComponent {
   constructor(
