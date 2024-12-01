@@ -57,33 +57,30 @@
     <div class="container" >
       <div class="messages" [@slideInFromBottom]>
         <h1>Messages</h1>
-        <!-- <div *ngIf="chats.length > 0; else noChats">
+        @if (chats.length > 0) {    
+        <div>
+          @for (chat of chats; track $index) {
           <div
-            class="message"
-            *ngFor="let chat of chats"
-            (click)="openChat(chat._id, chat.userIds.find(user => user._id !== currentUser._id))"
+            class="message" (click)="openChat(currentUser?._id)"
           >
             <img
-              [src]="(chat.userIds.find(user => user._id !== currentUser._id)?.avatar) || '/noavatar.jpg'"
+              [src]="(chat.userIds[$index + 1]?.avatar) || '/noavatar.jpg'"
               alt=""
             />
-            <span>{{ chat.userIds.find(user => user._id !== currentUser._id)?.username }}</span>
+            <span>{{ chat.userIds[$index + 1]?.username }}</span>
             <p>{{ chat.messages[chat.messages.length - 1]?.text }}</p>
           </div>
-        </div> -->
-        <ng-template #noChats>
+        }
+        </div>
+        }@else {
           <p>No Messages!</p>
-        </ng-template>
+        }
       </div>
     </div>
-  
-    <!-- <app-modal *ngIf="isChatOpen" (close)="closeChat()">
-      <app-chat
-        [receiver]="chatReceiver"
-        [chatId]="chatId"
-        [currentUser]="currentUser"
-        (close)="closeChat()"
-      ></app-chat>
-    </app-modal> -->
+  @if (isChatOpen) {
+    <app-modal (onClose)="closeChat()">
+      <app-chat ></app-chat>
+    </app-modal>
+  }
   </div>
   

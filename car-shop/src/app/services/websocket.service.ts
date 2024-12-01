@@ -44,6 +44,7 @@ export class SocketService {
   }
 
   sendMessage(senderId: string, receiverId: string, text: string): void {
+    
     if (this.socket) {
       this.socket.emit('sendMessage', {
         senderId,

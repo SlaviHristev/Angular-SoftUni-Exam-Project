@@ -6,12 +6,15 @@ import { RouterLink } from '@angular/router';
 import { ErrorPopUpComponent } from "../../shared/error-popup/error-popup.component";
 import { ErrorService } from '../../services/error.service';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { ModalComponent } from "../../shared/modal/modal.component";
+import { ChatComponent } from "../../shared/chat/chat.component";
+import { ChatService } from '../../services/chat.service';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
-  imports: [CardComponent, RouterLink, ErrorPopUpComponent],
+  imports: [CardComponent, RouterLink, ErrorPopUpComponent, ModalComponent, ChatComponent],
   animations: [
     trigger('slideInFromBottom', [
       transition(':enter', [
@@ -36,6 +39,7 @@ export class ProfileComponent implements OnInit {
     private authService: AuthService,
     private apiService: ApiRequestService,
     private errorService: ErrorService,
+    private chatService: ChatService
   ) {}
 
   ngOnInit() {
@@ -84,12 +88,14 @@ export class ProfileComponent implements OnInit {
   fetchUserChats() {
     this.apiService.get(`chats/user/${this.currentUser._id}`).subscribe({
       next: (response: any) => {
+        console.log('Chats API Response:', response);
+        this.chats = response?.filter((chat: any) => chat?.messages?.length > 0) || [];
+        console.log(this.chats);
         
-        this.chats = response?.data?.filter((chat: any) => chat?.messages?.length > 0) || [];
       },
       error: (error) => {
         console.error('Failed to fetch user chats:', error);
-        this.chats = []; 
+        this.chats = [];
       },
       complete: () => {
         this.loading = false;
@@ -97,9 +103,9 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  openChat(chatId: string, receiver: any) {
-    this.chatReceiver = receiver;
-    this.chatId = chatId;
+  openChat(ownerId: string): void {
+    
+    this.chatService.openChat(this.currentUser._id, ownerId);
     this.isChatOpen = true;
   }
 

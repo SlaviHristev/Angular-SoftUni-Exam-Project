@@ -3,12 +3,13 @@ import { SocketService } from '../../services/websocket.service';
 import { ChatService } from '../../services/chat.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth-service.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss'],
-  imports: [ReactiveFormsModule]
+  imports: [ReactiveFormsModule],
 })
 export class ChatComponent implements OnInit, OnDestroy {
   isChatOpen = false;
@@ -18,6 +19,8 @@ export class ChatComponent implements OnInit, OnDestroy {
   messages: any[] = [];
   chatForm!: FormGroup;
   currentUser: any;
+
+  private subscriptions: Subscription = new Subscription();
 
   @ViewChild('messageEndRef') messageEndRef!: ElementRef;
 
@@ -29,8 +32,13 @@ export class ChatComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    const user = this.authService.getCurrentUser();
+    if (!user || !user._id) {
+      console.error('Current user is not defined or invalid');
+      return;
+    }
 
-    this.currentUser = { _id: this.authService.getCurrentUser()?._id };
+    this.currentUser = { _id: user._id };
 
     this.chatForm = this.fb.group({
       text: ['', Validators.required],
@@ -38,63 +46,112 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     const currentUserId = this.currentUser._id;
 
-
     this.socketService.connect(currentUserId);
 
+    this.subscriptions.add(
+      this.chatService.isChatOpen$.subscribe((isOpen) => {
+        this.isChatOpen = isOpen;
+      })
+    );
 
-    this.chatService.isChatOpen$.subscribe((isOpen) => {
-      this.isChatOpen = isOpen;
-    });
+    this.subscriptions.add(
+      this.chatService.chatReceiver$.subscribe((receiver) => {
+        this.chatReceiver = receiver;
+      })
+    );
 
-    this.chatService.chatReceiver$.subscribe((receiver) => {
-      this.chatReceiver = receiver;
-    });
+    this.subscriptions.add(
+      this.chatService.chatId$.subscribe((id) => {
+        this.chatId = id;
+        if (id) {
+          this.fetchChatHistory();
+        }
+      })
+    );
 
-    this.chatService.chatId$.subscribe((id) => {
-      this.chatId = id;
-    });
-
-    this.socketService.messages$.subscribe((messages) => {
-      this.messages = messages;
-      this.scrollToBottom();
-    });
+    this.subscriptions.add(
+      this.socketService.messages$.subscribe((newMessages) => {
+        this.messages = [...this.messages, ...newMessages];
+        this.scrollToBottom();
+      })
+    );
   }
 
   ngOnDestroy(): void {
     this.socketService.disconnect();
+    this.subscriptions.unsubscribe();
   }
 
+  private fetchChatHistory(): void {
+    if (!this.chatId) return;
+
+    this.subscriptions.add(
+      this.chatService.getChatHistory(this.chatId).subscribe({
+        next: (res) => {
+          this.messages = res.messages;
+          this.scrollToBottom();
+        },
+        error: (error) => {
+          console.error('Failed to fetch chat history:', error);
+        },
+      })
+    );
+  }
 
   openChat(ownerId: string): void {
-    console.log(ownerId);
-    
+    if (!this.currentUser || !this.currentUser._id) {
+      console.error('Current user is not set');
+      return;
+    }
+
     this.chatService.openChat(this.currentUser._id, ownerId);
   }
 
-
   sendMessage(): void {
-    console.log(this.chatForm.invalid);
-    console.log(this.chatReceiver);
-    console.log(this.chatId);
-    
-    if (this.chatForm.invalid || !this.chatReceiver || !this.chatId) return;
-    
-    
-    const { text } = this.chatForm.value;
- 
-    this.socketService.sendMessage(this.currentUser._id, this.chatReceiver._id, text);
-    this.chatForm.reset();
-  }
+    if (
+      this.chatForm.invalid ||
+      !this.chatReceiver ||
+      !this.chatId ||
+      !this.currentUser ||
+      !this.currentUser._id
+    ) {
+      console.error('Invalid form submission or missing chat details');
+      return;
+    }
 
+    const { text } = this.chatForm.value;
+
+    this.subscriptions.add(
+      this.chatService
+        .sendMessage({
+          chatId: this.chatId,
+          senderId: this.currentUser._id,
+          text,
+        })
+        .subscribe({
+          next: (res) => {
+            this.socketService.sendMessage(this.currentUser._id, this.chatReceiver._id, text);
+
+            this.messages = [...this.messages, res.data];
+            this.chatForm.reset();
+            this.scrollToBottom();
+          },
+          error: (error) => {
+            console.error('Failed to send message:', error);
+          },
+        })
+    );
+  }
 
   scrollToBottom(): void {
     setTimeout(() => {
-      this.messageEndRef.nativeElement.scrollIntoView({ behavior: 'smooth' });
+      if (this.messageEndRef) {
+        this.messageEndRef.nativeElement.scrollIntoView({ behavior: 'smooth' });
+      }
     }, 0);
   }
 
-
   trackById(index: number, item: any): string {
-    return item._id; 
+    return item._id;
   }
 }

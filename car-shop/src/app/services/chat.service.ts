@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -18,16 +18,19 @@ export class ChatService {
 
   constructor(private http: HttpClient) {}
 
+  getChatHistory(chatId: string): Observable<any> {
+    return this.http.get(`${this.API_BASE_URL}/chats/${chatId}`, {withCredentials:true});
+  }
+
   openChat(currentUserId: string, ownerId: string): void {
     this.http.get(`${this.API_BASE_URL}/users/profiles/${ownerId}`, {withCredentials: true}).subscribe({
       next: (receiver: any) => {
         this.chatReceiverSubject.next(receiver);
-  
         this.http
           .post(`${this.API_BASE_URL}/chats/startChat`, {
             userId1: currentUserId,
             userId2: ownerId,
-          })
+          },{withCredentials:true})
           .subscribe({
             next: (chat: any) => {
               this.chatIdSubject.next(chat._id);
@@ -46,6 +49,14 @@ export class ChatService {
         }
       },
     });
+  }
+
+  sendMessage(message: {
+    chatId: string;
+    senderId: string;
+    text: string;
+  }): Observable<any> {
+    return this.http.post(`${this.API_BASE_URL}/messages/send`, message, {withCredentials:true});
   }
 
   closeChat(): void {

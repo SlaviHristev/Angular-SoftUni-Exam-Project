@@ -79,9 +79,9 @@ export class UserProfileComponent implements OnInit {
   }
 
   openChat(ownerId: string): void {
-    console.log(ownerId);
     
     this.chatService.openChat(this.currentUser._id, ownerId);
+    this.isChatOpen = true;
   }
 
 
