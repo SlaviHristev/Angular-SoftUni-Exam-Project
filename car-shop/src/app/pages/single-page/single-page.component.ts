@@ -5,7 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { SpinnerComponent } from "../../shared/spinner/spinner.component";
 import { AuthService } from '../../services/auth-service.service';
 import { SliderComponent } from "../../shared/slider/slider.component";
-import { SocketService } from '../../services/socket-service.service';
+import { SocketService } from '../../services/websocket.service';
 import { ErrorService } from '../../services/error.service';
 import { ErrorPopUpComponent } from "../../shared/error-popup/error-popup.component";
 import { animate, style, transition, trigger } from '@angular/animations';
@@ -109,10 +109,6 @@ export class SinglePageComponent implements OnInit {
       message: `${this.currentUser.username} saved your post.`,
     };
 
-
-    if (this.socketService.socket) {
-      this.socketService.socket.emit('sendNotification', notification);
-    }
 
     this.apiRequestService
       .post(`notifications/${notification.receiverId}`, {

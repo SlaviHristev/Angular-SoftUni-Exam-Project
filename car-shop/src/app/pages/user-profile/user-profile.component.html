@@ -1,5 +1,5 @@
 @if (!loading) {
-    <app-error-pop-up/>
+<app-error-pop-up />
 <div class="userProfile" [@slideInFromBottom]>
   <div class="userInfo">
     <img [src]="profile?.avatar || '/noavatar.jpg'" alt="User Avatar" />
@@ -16,24 +16,23 @@
   <div class="profilePosts">
     <h3>Posts</h3>
     @if (posts.length > 0) {
-        <div>
-            @for (post of posts; track $index) {
-                <app-card [item]="post"></app-card>
-            }
-        </div>
+    <div>
+      @for (post of posts; track $index) {
+      <app-card [item]="post"></app-card>
+      }
+    </div>
     }@else {
-        <p>No posts available</p>
+    <p>No posts available</p>
     }
   </div>
-  <!--   
-        <app-modal *ngIf="isChatOpen" (close)="closeChat()">
-          <app-chat
-            [receiver]="chatReceiver"
-            [chatId]="chatId"
-            [currentUser]="currentUser"
-            (close)="closeChat()"
-          ></app-chat>
-        </app-modal> -->
+  @if (isChatOpen) {
+  <app-modal (onClose)="closeChat()">
+    <app-chat
+    
+      
+    ></app-chat>
+  </app-modal>
+  }
 </div>
 }@else {
 <app-spinner />

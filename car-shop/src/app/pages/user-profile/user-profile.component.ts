@@ -6,13 +6,14 @@ import { ErrorService } from '../../services/error.service';
 import { SpinnerComponent } from "../../shared/spinner/spinner.component";
 import { CardComponent } from "../../shared/card/card.component";
 import { ErrorPopUpComponent } from "../../shared/error-popup/error-popup.component";
-// import { ChatService } from '../../services/chat.service';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { ChatComponent } from "../../shared/chat/chat.component";
+import { ModalComponent } from "../../shared/modal/modal.component";
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.scss'],
-  imports: [SpinnerComponent, CardComponent, ErrorPopUpComponent],
+  imports: [SpinnerComponent, CardComponent, ErrorPopUpComponent, ChatComponent, ModalComponent],
   animations: [
     trigger('slideInFromBottom', [
       transition(':enter', [
@@ -37,7 +38,7 @@ export class UserProfileComponent implements OnInit {
     private apiRequestService: ApiRequestService,
     private authService: AuthService,
     private errorService: ErrorService,
-    // private chatService: ChatService,
+
 
   ) {
     this.currentUser = this.authService.getCurrentUser();

@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { ApiRequestService } from '../../services/api-request.service';
 import { AuthService } from '../../services/auth-service.service';
-import { SocketService } from '../../services/socket-service.service';
+import { SocketService } from '../../services/websocket.service';
 
 
 @Component({
@@ -97,10 +97,6 @@ export class CardComponent implements OnInit {
       message: `${this.currentUser.username} saved your post.`,
     };
 
-
-    if (this.socketService.socket) {
-      this.socketService.socket.emit('sendNotification', notification);
-    }
 
     this.apiService
       .post(`notifications/${notification.receiverId}`, {

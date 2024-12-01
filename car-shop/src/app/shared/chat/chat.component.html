@@ -1,0 +1,29 @@
+<div class="chat">
+    <div class="chatBox">
+      <div class="top">
+        <div class="user">
+          <img [src]="chatReceiver?.avatar || '/noavatar.jpg'" alt="Avatar" />
+          <span>{{ chatReceiver?.username }}</span>
+        </div>
+      </div>
+      <div class="center">
+        @for (message of messages; track $index) {
+        <div 
+             class="chatMessage"
+             [style]="{
+               'align-self': message.senderId === currentUser._id ? 'flex-end' : 'flex-start',
+               'text-align': message.senderId === currentUser._id ? 'right' : 'left'
+             }">
+          <p>{{ message.text }}</p>
+          <span>{{ message.createdAt }}</span>
+        </div>
+    }
+        <div #messageEndRef></div>
+      </div>
+      <form class="bottom" [formGroup]="chatForm" (ngSubmit)="sendMessage()">
+        <textarea formControlName="text"></textarea>
+        <button type="submit" [disabled]="chatForm.invalid">Send</button>
+      </form>
+    </div>
+  </div>
+  
