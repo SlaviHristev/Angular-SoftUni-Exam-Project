@@ -60,14 +60,15 @@
         @if (chats.length > 0) {    
         <div>
           @for (chat of chats; track $index) {
+            
           <div
-            class="message" (click)="openChat(currentUser?._id)"
+            class="message" (click)="openChat(chat.otherUser?._id)"
           >
             <img
-              [src]="(chat.userIds[$index + 1]?.avatar) || '/noavatar.jpg'"
+              [src]="(chat.otherUser?.avatar) || '/noavatar.jpg'"
               alt=""
             />
-            <span>{{ chat.userIds[$index + 1]?.username }}</span>
+            <span>{{ chat.otherUser?.username }}</span>
             <p>{{ chat.messages[chat.messages.length - 1]?.text }}</p>
           </div>
         }

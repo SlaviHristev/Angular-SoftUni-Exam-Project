@@ -18,7 +18,6 @@ export class SocketService {
   private readonly SOCKET_SERVER_URL = 'http://localhost:8900';
 
   connect(userId: string): void {
- 
     this.socket = io(this.SOCKET_SERVER_URL);
 
     this.socket.emit('addUser', userId);
@@ -29,7 +28,12 @@ export class SocketService {
 
     this.socket.on('getMessage', (message: any) => {
       const currentMessages = this.messagesSubject.getValue();
-      this.messagesSubject.next([...currentMessages, message]);
+      const isDuplicate = currentMessages.some(
+        (msg) => msg.createdAt === message.createdAt && msg.senderId === message.senderId
+      );
+      if (!isDuplicate) {
+        this.messagesSubject.next([...currentMessages, message]);
+      }
     });
 
     this.socket.on('receiveNotification', (notification: any) => {
@@ -39,28 +43,24 @@ export class SocketService {
   }
 
   disconnect(): void {
-    this.socket?.disconnect();
-    this.socket = null;
+    if (this.socket) {
+      this.socket.off('getUsers');
+      this.socket.off('getMessage');
+      this.socket.off('receiveNotification');
+      this.socket.disconnect();
+      this.socket = null;
+    }
   }
 
   sendMessage(senderId: string, receiverId: string, text: string): void {
-    
     if (this.socket) {
-      this.socket.emit('sendMessage', {
-        senderId,
-        receiverId,
-        text,
-      });
+      this.socket.emit('sendMessage', { senderId, receiverId, text });
     }
   }
 
   sendNotification(senderId: string, receiverId: string, message: string): void {
     if (this.socket) {
-      this.socket.emit('sendNotification', {
-        senderId,
-        receiverId,
-        message,
-      });
+      this.socket.emit('sendNotification', { senderId, receiverId, message });
     }
   }
 }

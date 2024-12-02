@@ -37,17 +37,21 @@ const io = require("socket.io")(8900, {
     socket.on("sendMessage", ({ senderId, receiverId, text }) => {
       const user = getUser(receiverId);
       console.log("Message from", senderId, "to", receiverId, ":", text);
+    
       if (user) {
         const { socketId } = user;
+    
         if (socketId) {
           const message = {
             senderId,
             text,
-            createdAt: new Date().toISOString(), 
+            createdAt: new Date().toISOString(),
           };
+    
+         
           io.to(socketId).emit("getMessage", message);
+    
           console.log("Message sent to socket:", socketId);
-          io.emit("newMessage", message);
         } else {
           console.error(`Socket ID not found for user: ${receiverId}`);
         }
@@ -55,7 +59,7 @@ const io = require("socket.io")(8900, {
         console.error(`User not found: ${receiverId}`);
       }
     });
-
+    
     socket.on("sendNotification", ({ senderId, receiverId, message }) => {
       const user = getUser(receiverId);
       if (user) {

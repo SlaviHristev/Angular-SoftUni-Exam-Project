@@ -118,9 +118,9 @@ export class ChatComponent implements OnInit, OnDestroy {
       console.error('Invalid form submission or missing chat details');
       return;
     }
-
+  
     const { text } = this.chatForm.value;
-
+  
     this.subscriptions.add(
       this.chatService
         .sendMessage({
@@ -130,17 +130,27 @@ export class ChatComponent implements OnInit, OnDestroy {
         })
         .subscribe({
           next: (res) => {
-            this.socketService.sendMessage(this.currentUser._id, this.chatReceiver._id, text);
 
-            this.messages = [...this.messages, res.data];
+            const isAlreadyAdded = this.messages.some(
+              (msg) => msg._id === res._id
+            );
+  
+            if (!isAlreadyAdded) {
+              this.messages = [...this.messages, res];
+              this.scrollToBottom();
+            }
+  
             this.chatForm.reset();
-            this.scrollToBottom();
           },
           error: (error) => {
             console.error('Failed to send message:', error);
           },
         })
     );
+    console.log(this.currentUser._id);
+    console.log(this.chatReceiver._id);
+    
+    this.socketService.sendMessage(this.currentUser._id, this.chatReceiver._id, text);
   }
 
   scrollToBottom(): void {

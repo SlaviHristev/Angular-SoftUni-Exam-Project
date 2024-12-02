@@ -89,9 +89,22 @@ export class ProfileComponent implements OnInit {
     this.apiService.get(`chats/user/${this.currentUser._id}`).subscribe({
       next: (response: any) => {
         console.log('Chats API Response:', response);
-        this.chats = response?.filter((chat: any) => chat?.messages?.length > 0) || [];
-        console.log(this.chats);
-        
+  
+        this.chats = response
+          ?.filter((chat: any) => chat?.messages?.length > 0) 
+          .map((chat: any) => {
+         
+            const otherUserId = chat.userIds.find(
+              (id: string) => id !== this.currentUser._id
+            );
+            return {
+              ...chat,
+              otherUser: otherUserId, 
+            };
+          })
+          .filter((chat: any) => chat.otherUser); 
+  
+        console.log('Filtered Chats:', this.chats);
       },
       error: (error) => {
         console.error('Failed to fetch user chats:', error);
@@ -102,6 +115,7 @@ export class ProfileComponent implements OnInit {
       },
     });
   }
+  
 
   openChat(ownerId: string): void {
     

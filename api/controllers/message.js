@@ -4,7 +4,6 @@ import Message from "../Models/Message.js";
 
 export const sendMessage = async(req,res) =>{
     const {chatId,senderId, text} = req.body;
-
     try {
         const message = new Message({chatId, senderId, text});
         await message.save();
