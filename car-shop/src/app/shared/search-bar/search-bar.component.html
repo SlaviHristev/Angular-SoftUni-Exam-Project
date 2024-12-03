@@ -18,39 +18,32 @@
       [value]="query.category"
       (change)="handleChange($event, 'category')"
     >
-    @for (type of categories; track $index) {
+      @for (type of categories; track $index) {
 
-        <option [value]="type">
-            {{ type }}
-        </option>
-    }
+      <option [value]="type">
+        {{ type }}
+      </option>
+      }
     </select>
   </div>
-  <form (submit)="search()">
+  <div class="prices">
     <input
       type="text"
-      name="city"
       placeholder="City"
       (input)="handleChange($event, 'city')"
     />
     <input
       type="number"
-      name="minPrice"
-      min="0"
-      max="10000000"
       placeholder="Min Price"
       (input)="handleChange($event, 'minPrice')"
     />
     <input
       type="number"
-      name="maxPrice"
-      min="0"
-      max="10000000"
       placeholder="Max Price"
       (input)="handleChange($event, 'maxPrice')"
     />
-    <button type="submit">
+    <button type="submit" (click)="search()">
       <img src="/search.png" alt="Search" />
     </button>
-  </form>
+  </div>
 </div>

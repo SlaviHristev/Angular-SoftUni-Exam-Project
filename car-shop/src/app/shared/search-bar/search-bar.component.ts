@@ -25,7 +25,8 @@ export class SearchBarComponent {
     this.query[key] = target.value;
   }
 
-  search(): void {
+  search(event?: Event): void {
+    event?.preventDefault();
     const { fuelType, category, city, minPrice, maxPrice } = this.query;
     this.router.navigate(['/catalog'], {
       queryParams: {

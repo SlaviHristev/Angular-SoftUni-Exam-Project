@@ -16,7 +16,7 @@
   <div class="profilePosts">
     <h3>Posts</h3>
     @if (posts.length > 0) {
-    <div>
+    <div class="posts">
       @for (post of posts; track $index) {
       <app-card [item]="post"></app-card>
       }

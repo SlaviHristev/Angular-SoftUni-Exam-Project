@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiRequestService } from '../../services/api-request.service';
 import { CardComponent } from "../../shared/card/card.component";
 import { SpinnerComponent } from "../../shared/spinner/spinner.component";
@@ -26,60 +26,40 @@ export class CatalogComponent implements OnInit {
 
   constructor(
     private apiRequestService: ApiRequestService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.fetchPosts();
+    this.route.queryParams.subscribe((params) => {
+      this.fetchPosts(params);
+    });
   }
 
-  fetchPosts(): void {
+  fetchPosts(params: any): void {
     this.loading = true;
 
-  
-    this.route.queryParams.subscribe((params) => {
-      const { fuelType, category, city, minPrice, maxPrice } = params;
+    const { fuelType, category, city, minPrice, maxPrice } = params;
 
-      
-      if (fuelType || category || city || minPrice || maxPrice) {
-        this.apiRequestService.get('posts/search', {
-          params: {
-            fuelType,
-            category,
-            city,
-            minPrice,
-            maxPrice,
-          },
-        }).subscribe({
-          next: (response: any) => {
-            this.posts = response || [];
-            console.log(this.posts);
-          },
-          error: (err) => {
-            console.error('Failed to fetch posts:', err);
-            alert('Failed to fetch posts');
-          },
-          complete: () => {
-            this.loading = false;
-          },
-        });
-      } else {
-        
-        this.apiRequestService.get('posts').subscribe({
-          next: (response: any) => {
-            this.posts = response || [];
-            console.log(response);
-            
-          },
-          error: (err) => {
-            console.error('Failed to fetch posts:', err);
-            alert('Failed to fetch posts');
-          },
-          complete: () => {
-            this.loading = false;
-          },
-        });
-      }
-    });
+    const hasFilters =
+      fuelType || category || city || minPrice || maxPrice;
+
+    const requestUrl = hasFilters ? 'posts/search' : 'posts';
+
+    this.apiRequestService
+      .get(requestUrl, { params })
+      .subscribe({
+        next: (response: any) => {
+          this.posts = response || [];
+          console.log('Fetched posts:', this.posts);
+        },
+        error: (err) => {
+          console.error('Failed to fetch posts:', err);
+          alert('Failed to fetch posts');
+        },
+        complete: () => {
+          this.loading = false;
+        },
+      });
   }
 }
