@@ -9,12 +9,15 @@ import { SocketService } from '../../services/websocket.service';
 import { ErrorService } from '../../services/error.service';
 import { ErrorPopUpComponent } from "../../shared/error-popup/error-popup.component";
 import { animate, style, transition, trigger } from '@angular/animations';
+import { ChatService } from '../../services/chat.service';
+import { ModalComponent } from "../../shared/modal/modal.component";
+import { ChatComponent } from "../../shared/chat/chat.component";
 
 @Component({
   selector: 'app-single-page',
   templateUrl: './single-page.component.html',
   styleUrls: ['./single-page.component.scss'],
-  imports: [SpinnerComponent, RouterLink, SliderComponent, ErrorPopUpComponent],
+  imports: [SpinnerComponent, RouterLink, SliderComponent, ErrorPopUpComponent, ModalComponent, ChatComponent],
   animations: [
     trigger('slideInFromRight', [
       transition(':enter', [
@@ -29,6 +32,7 @@ export class SinglePageComponent implements OnInit {
   post: any = null;
   loading = true;
   currentUser: any = null; 
+  isChatOpen: boolean = false;
   @Input() isSaved: boolean = false; 
   @Output() savedStatusChange = new EventEmitter<boolean>();
 
@@ -38,8 +42,8 @@ export class SinglePageComponent implements OnInit {
     private router: Router,
     private sanitizer: DomSanitizer,
     private authService: AuthService,
-    private socketService: SocketService,
     private errorService: ErrorService,
+    private chatService: ChatService,
   ) {}
 
   ngOnInit(): void {
@@ -175,5 +179,14 @@ export class SinglePageComponent implements OnInit {
   isOwner(): boolean {
     return this.currentUser?._id === this.post?.ownerId?._id;
   
+  }
+
+  openChat(ownerId: string): void {
+    
+    this.chatService.openChat(this.currentUser._id, ownerId);
+    this.isChatOpen = true;
+  }
+  closeChat(): void {
+    this.isChatOpen = false;
   }
 }

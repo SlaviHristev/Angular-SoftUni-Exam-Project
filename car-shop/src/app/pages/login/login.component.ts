@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth-service.service';
 import { ErrorService } from '../../services/error.service';
 import { ErrorPopUpComponent } from "../../shared/error-popup/error-popup.component";
@@ -9,7 +9,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  imports: [ErrorPopUpComponent],
+  imports: [ErrorPopUpComponent, RouterLink],
   animations: [
     trigger('slideInFromLeft', [
       transition(':enter', [

@@ -118,7 +118,7 @@
           >
             <img src="/save.png" alt="Save" />
           </button>
-          <button>
+          <button (click)="openChat(post.ownerId?._id)">
             <img src="/chat.png" alt="Chat Icon" />
           </button>
 
@@ -131,6 +131,13 @@
   <app-spinner></app-spinner>
   } @if (!loading && !post) {
   <div>No post data</div>
-
   }
+  @if (isChatOpen) {
+    <app-modal (onClose)="closeChat()">
+      <app-chat
+      
+        
+      ></app-chat>
+    </app-modal>
+    }
 </div>
