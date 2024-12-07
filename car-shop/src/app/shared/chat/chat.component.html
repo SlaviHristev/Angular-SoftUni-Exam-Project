@@ -15,7 +15,7 @@
                'text-align': message.senderId === currentUser._id ? 'right' : 'left'
              }">
           <p>{{ message.text }}</p>
-          <span>{{ message.createdAt }}</span>
+          <span>{{ message.createdAt | date: "hh:mm:ss" }}</span>
         </div>
     }
         <div #messageEndRef></div>

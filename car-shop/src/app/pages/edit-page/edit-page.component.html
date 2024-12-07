@@ -132,8 +132,8 @@
         <div class="imageContainer">
           @for (image of images; track $index) {
 
-          <img [src]="image" alt="" />
-          <button (click)="deleteImage($index)" [@slideInFromLeft]>
+          <img [src]="image" alt=""  [@slideInFromLeft]/>
+          <button (click)="deleteImage($index)" >
             <img src="/delete.png" alt="Delete" />
           </button>
           }
