@@ -11,8 +11,8 @@
         <div 
              class="chatMessage"
              [style]="{
-               'align-self': message.senderId === currentUser._id ? 'flex-end' : 'flex-start',
-               'text-align': message.senderId === currentUser._id ? 'right' : 'left'
+               'align-self': message.senderId._id === currentUser._id ? 'flex-end' : 'flex-start',
+               'text-align': message.senderId._id === currentUser._id ? 'right' : 'left'
              }">
           <p>{{ message.text }}</p>
           <span>{{ message.createdAt | date: "hh:mm:ss" }}</span>

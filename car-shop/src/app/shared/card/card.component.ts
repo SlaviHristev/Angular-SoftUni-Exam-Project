@@ -1,13 +1,15 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import {  RouterLink } from '@angular/router';
 import { ApiRequestService } from '../../services/api-request.service';
 import { AuthService } from '../../services/auth-service.service';
-import { SocketService } from '../../services/websocket.service';
+import { ModalComponent } from "../modal/modal.component";
+import { ChatComponent } from "../chat/chat.component";
+import { ChatService } from '../../services/chat.service';
 
 
 @Component({
   selector: 'app-card',
-  imports: [RouterLink],
+  imports: [RouterLink, ModalComponent, ChatComponent],
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss'],
 })
@@ -16,12 +18,14 @@ export class CardComponent implements OnInit {
   @Input() currentUser: any; 
   @Input() isSaved: boolean = false; 
   @Output() savedStatusChange = new EventEmitter<boolean>();
+  isChatOpen: boolean = false;
+  chatReceiver: any = null;
+  chatId: string | null = null;
 
   constructor(
-    private router: Router,
     private apiService: ApiRequestService,
     private authService: AuthService,
-    private socketService: SocketService
+    private chatService: ChatService
   ) {}
 
 
@@ -115,7 +119,14 @@ export class CardComponent implements OnInit {
   }
 
   openChat(ownerId: string): void {
-    console.log(`Open chat with ownerId: ${ownerId}`);
+    this.chatService.openChat(this.currentUser._id, ownerId);
+    this.isChatOpen = true;
 
+  }
+
+  closeChat() {
+    this.isChatOpen = false;
+    this.chatReceiver = null;
+    this.chatId = null;
   }
 }

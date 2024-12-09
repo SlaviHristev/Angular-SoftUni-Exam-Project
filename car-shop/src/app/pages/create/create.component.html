@@ -1,6 +1,6 @@
-<div class="create" [@slideInFromBottom]>
+<div class="create" >
   <app-error-pop-up/>
-    <div class="formContainer">
+    <div class="formContainer" [@slideInFromBottom]>
       <h1>Add New Car</h1>
       <div class="wrapper">
         <form [formGroup]="createForm" (ngSubmit)="onSubmit()">
@@ -101,10 +101,10 @@
       </div>
     </div>
   
-    <div class="sideContainer">
+    <div class="sideContainer" >
         @for (image of images; track $index) {
             <img [src]="image" alt="Car Image" />
         }
-      <app-upload-widget (imagesUploaded)="handleImageUpload($event)"></app-upload-widget>
+      <app-upload-widget (imagesUploaded)="handleImageUpload($event)" [@slideInFromBottom]></app-upload-widget>
     </div>
   </div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute} from '@angular/router';
 import { ApiRequestService } from '../../services/api-request.service';
 import { CardComponent } from "../../shared/card/card.component";
 import { SpinnerComponent } from "../../shared/spinner/spinner.component";
@@ -27,7 +27,6 @@ export class CatalogComponent implements OnInit {
   constructor(
     private apiRequestService: ApiRequestService,
     private route: ActivatedRoute,
-    private router: Router
   ) {}
 
   ngOnInit(): void {
